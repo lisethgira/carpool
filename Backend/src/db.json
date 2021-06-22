@@ -1,0 +1,20 @@
+{
+    "usuarios":[
+    {
+        "id":1,
+        "apellido_paterno":"Giraldo",
+        "apellido_materno":"Morales",
+        "nombre":"Liseth Arelis",
+        "username":"LisethA1",
+        "password":"827ccb0eea8a706c4c34a16891f84e7b"
+    },
+    {
+        "id":2,
+        "apellido_paterno":"Giraldo",
+        "apellido_materno":"Morales",
+        "nombre":"Luis Arbey",
+        "username":"ArbeyGira2",
+        "password":"827ccb0eea8a706c4c34a16891f84e7b"
+    }
+]
+}
