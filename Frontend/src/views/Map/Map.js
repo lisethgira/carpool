@@ -7,9 +7,6 @@ import mapStyle from "./customMapStyle.json"
 import { Card, Container, Row } from "reactstrap";
 import Header from "components/Headers/Header.js";
 
-const googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.27&libraries=places,geometry,directions&key=AIzaSyBkFYmBhY-Y-CVidYMy7vff5_wxfii3lhE";
-
-
 const geolocation = (
     canUseDOM && navigator.geolocation ?
         navigator.geolocation :

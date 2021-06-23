@@ -74,8 +74,8 @@ CREATE TABLE IF NOT EXISTS `inscribir` (
 -- Volcado de datos para la tabla `inscribir`
 --
 
-INSERT INTO `inscribir` (`idInscribir`, `idReserva`, `idUsuario3`, `inscribir`, `telefonoCarpooler`,`whatsappCarpooler`, `emailCarpooler`) VALUES
-(1, NULL, 1, 1, 3105142774,'https://wa.link/bvrr35','lisethgiraldo628@gmail.com');
+INSERT INTO `inscribir` (`idInscribir`, `idReserva`, `idUsuario3`, `inscribir`, `telefonoCarpooler`,`whatsappCarpooler`, `emailCarpooler`,`cuposReserva`) VALUES
+(1, NULL, 1, 1, 3105142774,'https://wa.link/bvrr35','lisethgiraldo628@gmail.com',3);
 
 -- --------------------------------------------------------
 
@@ -85,7 +85,7 @@ INSERT INTO `inscribir` (`idInscribir`, `idReserva`, `idUsuario3`, `inscribir`, 
 
 DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE IF NOT EXISTS `usuario` (
-  `idUsuario` int(11) NOT NULL,
+  `idUsuario` int(11) AUTO_INCREMENT NOT NULL ,
   `nombre` varchar(25) NOT NULL,
   `apellido` varchar(25) NOT NULL,
   `telefono` double NOT NULL,
@@ -99,14 +99,13 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `diasServicio`varchar(100)NOT NULL,
   `documento` double NOT NULL,
   `carpooler` int(11) NOT NULL,
-  `clave` varchar(10) NOT NULL,
+  `clave` varchar(100) NOT NULL,
   `foto` varchar(400) NOT NULL,
   `total` int(11) NOT NULL,
   `cupos`int(4)NOT NULL,
   PRIMARY KEY (`idUsuario`),
   UNIQUE KEY `idUsuario` (`idUsuario`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
 --
 -- Volcado de datos para la tabla `usuario`
 --
@@ -115,6 +114,7 @@ INSERT INTO `usuario` (`idUsuario`, `nombre`, `apellido`, `telefono`, `whatsapp`
 (1, 'Liseth Arelis', 'Giraldo Morales', 3105142774,'https://wa.link/bvrr35', 'Lisethgiraldo628@gmail.com', 'MDS345', 'Calle 51D #59A-44', 'Cra 52 #105-23', '05:00 pm', '06:00 pm','lunes-martes', 1036965346, 23, '12345', 'https://image.freepik.com/vector-gratis/diseno-ilustracion-vector-personaje-avatar-mujer-joven_24877-18520.jpg', 20000,4),
 (2, 'Luz Tatiana', 'Zapata', 3135151617,'https://wa.link/6c5rz2', 'tatianazz3@hotmail.com', 'MAD374', 'Calle 51 D 20 50', 'Cr 84 35 110', '07:00 am', '07:15am','lunes-martes-miercoles', 43929489, 25, '12345', 'https://image.freepik.com/vector-gratis/diseno-ilustracion-vector-personaje-avatar-mujer-joven_24877-18536.jpg', 6000,4);
 COMMIT;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
