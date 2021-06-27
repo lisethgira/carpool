@@ -1,9 +1,16 @@
-import React from "react";
+import React, { Fragment } from 'react'
+
 
 // reactstrap components
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
 
 const Header = () => {
+ /* logout = async e => {
+    e.preventDefault()
+    let { dispatch } = this.props
+    await dispatch(logout())
+    Notify({ value: 'Logged out!!' })
+  }*/
   return (
     <>
       <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">

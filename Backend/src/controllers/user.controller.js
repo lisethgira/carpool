@@ -1,24 +1,23 @@
 import { request } from "express";
 import User from '../models/user.model'
 
-export const createUser = (req, res) => {
-    res.json("Ok");
-}
 export const listarUsuario =(req,res) =>{
-    conexion.query('SELECT * FROM usuario' , async (error, results, fields) => {
-        
-        if (error)
-        throw error;
-
-    results.forEach(results => {
-        console.log(results);
-
-    });
-
-    res.send(results)
-
-    })    
+    User.getAll((err, userData) => {
+        if (err) {
+            res.status(400).send({
+                message: err.message || "se produjo un error al obtener los usuarios.",
+                data: null,
+            });   
+        }
+        else {
+            res.status(200).send({
+                message: null,
+                data: userData
+            });
+        }
+    }); 
 }
+
 //Obtiene Datos
 export const getProfile = (req, res) => {
     console.log(req.customer);
@@ -56,175 +55,121 @@ export const updateProfile = (req, res) => {
         });
 }
 
-// actualizar dirección
+//actualizar cupos del carpooler 
+export const updateCupos = (req, res) => {
+    
+    if (req.customer == null || req.customer == undefined) req.json.status(400).send({
+        message: "No se pudo obtener la informacion",
+        data: null,
+    });
 
-export const updateDirection = (req, res) => {
-    const email = req.body.email;
-    const whatsapp = req.body.whatsapp;
-    const dirOrigen = req.body.dirOrigen;
-    const dirDestino = req.body.dirDestino;
-    const horaSalidaDestino = req.body.horaSalidaDestino;
-    const horaSalidaOrigen = req.body.horaSalidaOrigen;
-    const placaCarro = req.body.placaCarro;
-    const carpooler = req.body.carpooler;
-    const diasServicio = req.body.diasServicio;
-    const total = req.body.total;
-    const cupos = req.body.cupos;
+    const {cupos, email} = req.body;
 
-    const datos = [{dirOrigen,
-        email,
-        whatsapp,
-        dirDestino,
-        horaSalidaOrigen,
-        horaSalidaDestino, 
-        placaCarro,
-        cupos,
-        carpooler,
-        total,
-        diasServicio}];
-
-        let respuesta;
-
-        if (dirDestino==='' || dirOrigen==='' || horaSalidaDestino==='' || horaSalidaOrigen==='') {
-            respuesta = "0"
-            res.send(respuesta);  
-            console.log(respuesta)
-        } else {
-
-          /*  conexion.query('UPDATE usuario SET dirOrigen="'+dirOrigen+'", dirDestino="'+dirDestino+'", horaSalidaOrigen="'+horaSalidaOrigen+'", horaSalidaDestino="'+horaSalidaDestino+'", placaCarro="'+placaCarro+'", carpooler="'+carpooler+'", total="'+total+'", diasServicio="'+diasServicio+'" WHERE email="'+email+'"', async (error, results) => {
-
-            console.log('Actualizacion exitosa')
-            respuesta = "1"
-            res.send(results);  
-            console.log(results)
-        }) */
-
-
-        conexion.query('UPDATE usuario SET dirOrigen="'+dirOrigen+'", dirDestino="'+dirDestino+'", horaSalidaDestino="'+horaSalidaDestino+'" , horaSalidaOrigen="'+horaSalidaOrigen+'", placaCarro="'+placaCarro+'", cupos="'+cupos+'", carpooler="'+carpooler+'", total="'+total+'", diasServicio="'+diasServicio+'" WHERE email="'+email+'"', async (error, results) => {
-
-            console.log('Actualizacion exitosa')
-            respuesta = "1"
-            res.send(datos);  
-            console.log(datos)
-        })
-        
-    }
-}
-// actualizar cupos del carpooler 
-
-export const updateCupos = (req, res) =>{
-    const cupos = req.body.cupos;
-    const email = req.body.email;
-
-
-    const datos = [{
-        cupos,
-        email
-    }];
-
-        let respuesta;
-
-
-        conexion.query('UPDATE usuario SET cupos="'+cupos+'" WHERE email="'+email+'"', async (error, results) => {
-
-            console.log('Actualizacion exitosa')
-            respuesta = "1"
-            res.send("actualizarCupos", datos);  
-            console.log("actualizarCupos", datos)
-        })
-        
+    User.updateCupos(cupos, email, (err, userData) => {
+        if (err) {
+            res.status(400).send({
+                message: err.message || "se produjo un error al actualizar el usuario.",
+                data: null,
+            });   
+        }
+        else {
+            res.status(200).send({
+                message: null,
+                data: req.body
+            });
+        }
+    }); 
 }
 
 //actualizar cupos del usuario
 export const updateCuposUsuario = (req, res) =>{
-
-    const idUsuario3 = req.body.idUsuario3;
-    const cuposReserva = req.body.cuposReserva;
-    const emailCarpooler = req.body.emailCarpooler;
-    
-        let respuesta;
-
-            conexion.query('UPDATE inscribir SET cuposReserva="'+cuposReserva+'" WHERE idUsuario3="'+idUsuario3+'" and emailCarpooler="'+emailCarpooler+'"  ', async (error, results) => {
-
-            console.log('Actualizacion cuposUsuario exitosa')
-            respuesta = "1"
-            res.send(respuesta);  
-            console.log(respuesta)
-        })
-        
+    const {idUsuario3, cuposReserva, emailCarpooler} = req.body;
+    User.updateInscribir(idUsuario3, cuposReserva, emailCarpooler, (err, userData) => {
+        if (err) {
+            res.status(400).send({
+                message: err.message || "se produjo un error al actualizar el usuario.",
+                data: null,
+            });   
+        }
+        else {
+            res.status(200).send({
+                message: null,
+                data: req.body
+            });
+        }
+    });
 }
 
 // actualiza cupos del carpooler
 
 export const updateCuposCarpooler = (req, res) => {
-
-    const emailCarpooler = req.body.emailCarpooler;
-    const whatsappCarpooler = req.body.whatsappCarpooler;
-    const cuposCancelar = req.body.cuposCancelar;
-
-        let respuesta;
-
-            conexion.query('UPDATE usuario SET cupos="'+cuposCancelar+'" WHERE email="'+emailCarpooler+'" and whatsappCarpooler="'+whatsappCarpooler+'"', async (error, results) => {
-
-            console.log('Actualizacion cuposCarpooler exitosa')
-            respuesta = "1"
-            res.send(respuesta);  
-            console.log(respuesta)
-        })
+    const {emailCarpooler, cuposCancelar} = req.body;
+    User.updateCuposCarpooler(emailCarpooler, cuposCancelar, (err, userData) => {
+        if (err) {
+            res.status(400).send({
+                message: err.message || "se produjo un error al actualizar el usuario.",
+                data: null,
+            });   
+        }
+        else {
+            res.status(200).send({
+                message: null,
+                data: req.body
+            });
+        }
+    });
 }
 
 // elimina la reserva del cliente /////
 
 export const updateReservaCliente = (req, res) => {
-
-    const reserva = req.body.reserva;
-    const emailCliente = req.body.emailCliente;
-    const whatsappCliente = req.body.whatsappCliente;
-    const idUsuario2 = req.body.idUsuario2;
-    
-
-        let respuesta;
-
-        if (reserva===0) {
-            respuesta = "0"
-            res.send(respuesta);  
-            console.log(respuesta)
-        } else {
-
-            conexion.query('UPDATE inforeserva SET reserva="'+reserva+'" WHERE idUsuario2="'+idUsuario2+'"', async (error, results) => {
-
-            console.log('Actualizacion exitosa')
-            respuesta = "1"
-            res.send(respuesta);  
-            console.log(respuesta)
-        })
-        
+    const {reserva, emailCliente, idUsuario2} = req.body;
+    if (reserva == 0) res.status(400).send({
+        message: err.message || "se produjo un error al actualizar el usuario.",
+        data: null,
+    });
+    else {
+        User.updateReserva(reserva, emailCliente, idUsuario2, (err, userData) => {
+            if (err) {
+                res.status(400).send({
+                    message: err.message || "se produjo un error al actualizar los datos del cliente en la reserva.",
+                    data: null,
+                });   
+            }
+            else {
+                res.status(200).send({
+                    message: null,
+                    data: req.body
+                });
+            }
+        });
     }
 }
 
 // elimina la reserva de la inscripcion  ///// //////////////////////////   este hay que modificarlo para que lea el id
 
 export const updateReservaInscribir = (req, res) => {
+    const {inscribir, emailCarpooler} = req.body;
 
-    const inscribir = req.body.inscribir;
-    const emailCarpooler = req.body.emailCarpooler;
-
-        let respuesta;
-
-        if (inscribir===0) {
-            respuesta = "0"
-            res.send(respuesta);  
-            console.log(respuesta)
-        } else {
-
-            conexion.query('UPDATE inscribir SET inscribir="'+inscribir+'" WHERE emailCarpooler="'+emailCarpooler+'"', async (error, results) => {
-
-            console.log('Actualizacion exitosa')
-            respuesta = "1"
-            res.send(respuesta);  
-            console.log(respuesta)
-        })
-        
+    if (inscribir == 0) res.status(400).send({
+        message: err.message || "se produjo un error al actualizar la inscripcón.",
+        data: null,
+    });
+    else {
+        User.updateReservaInscribir(inscribir, emailCarpooler, (err, userData) => {
+            if (err) {
+                res.status(400).send({
+                    message: err.message || "se produjo un error al actualizar el usuario.",
+                    data: null,
+                });   
+            }
+            else {
+                res.status(200).send({
+                    message: null,
+                    data: req.body
+                });
+            }
+        });
     }
 }
 
@@ -235,199 +180,182 @@ export const reservaServicio = (req, res) => {
 
     const reserva = req.body.reserva;
     const emailCliente = req.body.emailCliente;
-
-        let respuesta;
-
-        if (reserva===0) {
-            respuesta = "0"
-            res.send(respuesta);  
-            console.log(respuesta)
-        } else {
-
-            conexion.query('UPDATE inforeserva SET reserva="'+reserva+'" WHERE emailCliente="'+emailCliente+'"', async (error, results) => {
-
-            console.log('Actualizacion exitosa')
-            respuesta = "1"
-            res.send(respuesta);  
-            console.log(respuesta)
-        })
-        
+    if (reserva == 0) res.status(400).send({
+        message: err.message || "se produjo un error al actualizar el usuario.",
+        data: null,
+    });
+    else {
+        User.reservaServicio(reserva, emailCliente, (err, userData) => {
+            if (err) {
+                res.status(400).send({
+                    message: err.message || "se produjo un error al actualizar el usuario.",
+                    data: null,
+                });   
+            }
+            else {
+                res.status(200).send({
+                    message: null,
+                    data: req.body
+                });
+            }
+        });
     }
  //   res.send(datos);
-
 }
 
 // crear una nueva inscripcion e informacion en la reserva /////
 export const nuevaReserva = (req, res) => {
-
-    // tabla reserva
-    const reserva = req.body.reserva;
-    const emailCliente = req.body.emailCliente;
-    const idUsuario2 = req.body.idUsuario2;
-    
-    
-        conexion.query('INSERT INTO inforeserva SET reserva="'+reserva+'", emailCliente="'+emailCliente+'", idUsuario2="'+idUsuario2+'"  ', async (error, results)=> {
-
-            console.log('Actualizacion exitosa')
-            respuesta = "1"
-            res.send(respuesta);  
-            console.log(respuesta)
-        })
+    const {reserva, emailCliente, idUsuario2} = req.body;
+    User.nuevaReserva(reserva, emailCliente, idUsuario2, (err, userData) => {
+        if (err) {
+            res.status(400).send({
+                message: err.message || "se produjo un error al actualizar el usuario.",
+                data: null,
+            });   
+        }
+        else {
+            res.status(200).send({
+                message: null,
+                data: req.body
+            });
+        }
+    });
 }
 
 export const nuevaInscripcion = (req, res) => {
-
-
-    // tabla inscripcion
-    const inscribir = req.body.inscribir;
-    const idUsuario3 = req.body.idUsuario3;
-    const emailCarpooler = req.body.emailCarpooler;
-    const cuposReserva = req.body.cuposReserva;
-
-
-          conexion.query('INSERT INTO inscribir SET inscribir="'+inscribir+'", idUsuario3="'+idUsuario3+'", emailCarpooler="'+emailCarpooler+'", cuposReserva="'+cuposReserva+'"  ', async (error, results) => {
-
-            console.log('Actualizacion exitosa')
-            respuesta = "1"
-            res.send(respuesta);  
-            console.log(respuesta)
-        })
+    const {inscribir, idUsuario3, emailCarpooler, cuposReserva} = req.body;
+    User.nuevaInscripcion(inscribir, idUsuario3, emailCarpooler, cuposReserva, (err, userData) => {
+        if (err) {
+            res.status(400).send({
+                message: err.message || "se produjo un error al actualizar el usuario.",
+                data: null,
+            });   
+        }
+        else {
+            res.status(200).send({
+                message: null,
+                data: req.body
+            });
+        }
+    });
 }
 
 ////// link de prueba ///////
 export const linkPrueba = (req, res) => {
-
-    const email = req.body.email;
-    const dirOrigen = req.body.dirOrigen;
-
-    const datos = [{dirOrigen,
-        email}];
-
-        console.log(dirOrigen);
-
-    conexion.query('UPDATE usuario SET dirOrigen ="'+dirOrigen+'"  WHERE email ="'+email+'"', async (error, results) => {
-        if (error) {
-            throw error
-        } else {
-            console.log('Actualizacion exitosa')
-            console.log(datos);
+    const {email, dirOrigen} = req.body;
+    User.linkPrueba(email, dirOrigen, (err, userData) => {
+        if (err) {
+            res.status(400).send({
+                message: err.message || "se produjo un error al actualizar el usuario.",
+                data: null,
+            });   
         }
-        
-    })
-    res.send(datos);
+        else {
+            res.status(200).send({
+                message: null,
+                data: req.body
+            });
+        }
+    });
 }
 
 
 // buscar reservas hechas
 ///  ver informacion de reservas ////
 export const buscaReserva = (req, res) => {
-
-    const idUsuario3 = req.query.idUsuario3;
-    const emailCarpooler = req.query.emailCarpooler;
-    const inscribir = req.query.inscribir;
-
-    conexion.query('SELECT * FROM inscribir WHERE inscribir="'+inscribir+'" and idUsuario3="'+idUsuario3+'" and emailCarpooler="'+emailCarpooler+'"', async (error, results, fields) => {
-        
-        if (error)
-        throw error;
-
-
-    results.forEach(results => {
-        console.log(results);
+    const {idUsuario3, emailCarpooler, inscribir} = req.query;
+    User.buscaReserva(idUsuario3, emailCarpooler, (err, userData) => {
+        if (err) {
+            res.status(400).send({
+                message: err.message || "se produjo un error al actualizar el usuario.",
+                data: null,
+            });   
+        }
+        else {
+            res.status(200).send({
+                message: null,
+                data: userData
+            });
+        }
     });
-
-    if (results == '') {
-        res.send("2")
-        
-    }else{
-        res.send("3")
-    }  
-
-    })    
 }
 
 
 ///  ver informacion de reservas ////
 export const informeReserva = (req, res) => {
-
-    const reserva = req.query.reserva;
-    const email = req.query.email;
-    const idCarpooler = req.query.idCarpooler;
-
-    conexion.query('SELECT * FROM inforeserva INNER JOIN usuario on usuario.idUsuario = inforeserva.idUsuario2 WHERE inforeserva.reserva="'+reserva+'" and inforeserva.emailCliente="'+email+'"', async (error, results, fields) => {
-        
-        if (error)
-        throw error;
-
-    results.forEach(results => {
-        console.log(results);
-    });
-
-    res.send(results)
-
-    })    
+    const {reserva, email} = req.query;
+    User.informeReserva(reserva, email, (err, userData) => {
+        if (err) {
+            res.status(400).send({
+                message: err.message || "se produjo un error al actualizar el usuario.",
+                data: null,
+            });   
+        }
+        else {
+            res.status(200).send({
+                message: null,
+                data: userData
+            });
+        }
+    }); 
 }
 
 
 // informacion de los cupos resvados ////
 export const informeCuposReservados = (req, res) => {
-
-    const idUsuario3 = req.query.idUsuario3;
-    const inscribir = req.query.inscribir;
-
-    conexion.query('SELECT * FROM inscribir INNER JOIN usuario on usuario.idUsuario = inscribir.idUsuario3  WHERE inscribir.idUsuario3 ="'+idUsuario3+'" and inscribir ="'+inscribir+'"  ', async (error, results, fields) => {
-        
-        if (error)
-        throw error;
-
-    results.forEach(results => {
-        console.log(results);
-    });
-
-    res.send(results)
-
-    })    
+    const {idUsuario3, inscribir} = req.query;
+    User.informeCuposReservados(idUsuario3, inscribir, (err, userData) => {
+        if (err) {
+            res.status(400).send({
+                message: err.message || "se produjo un error al actualizar el usuario.",
+                data: null,
+            });   
+        }
+        else {
+            res.status(200).send({
+                message: null,
+                data: userData
+            });
+        }
+    });  
 }
  
 ///  Dias de reserva que hace el usuario ////
 export const diasReservados = (req, res) => {
-
-    const inscribir = req.query.inscribir;
-    const idUsuario3 = req.query.idUsuario3;
-
-
-    conexion.query('SELECT * FROM inscribir WHERE idUsuario3="'+idUsuario3+'" and inscribir="'+inscribir+'"  ', async (error, results, fields) => {
-        
-        if (error)
-        throw error;
-
-    results.forEach(results => {
-        console.log(results);
+    const {inscribir, idUsuario3} = req.query;
+    User.diasReservados(inscribir, idUsuario3, (err, userData) => {
+        if (err) {
+            res.status(400).send({
+                message: err.message || "se produjo un error al actualizar el usuario.",
+                data: null,
+            });   
+        }
+        else {
+            res.status(200).send({
+                message: null,
+                data: userData
+            });
+        }
     });
-
-    res.send(results)
-
-    })    
 }
 
 
 export const informeReservasCarpooler = (req, res) => {
-
-    const inscribir = req.query.inscribir;
-    const email = req.query.email;
-
-    conexion.query('SELECT * FROM inscribir inner join usuario on usuario.idUsuario = inscribir.idUsuario3 WHERE inscribir.emailCarpooler="'+email+'" and inscribir.inscribir="'+inscribir+'"', async (error, results, fields) => {
-        
-        if (error)
-        throw error;
-
-    results.forEach(results => {
-        console.log(results);
+    const {inscribir, email} = req.query;
+    User.informeReservasCarpooler(inscribir, email, (err, userData) => {
+        if (err) {
+            res.status(400).send({
+                message: err.message || "se produjo un error al actualizar el usuario.",
+                data: null,
+            });   
+        }
+        else {
+            res.status(200).send({
+                message: null,
+                data: userData
+            });
+        }
     });
-
-    res.send(results)
-
-    })    
 }
 
 ///  ver informacion de carpooling ////
@@ -437,18 +365,20 @@ export const informeCarpooling =(req, res) => {
     const email = req.query.email;
     const cupos = req.query.cupos;
 
-    conexion.query('SELECT * FROM usuario WHERE carpooler="'+carpooler+'" and usuario.email!="'+email+'" and usuario.cupos>"'+cupos+'" ' , async (error, results, fields) => {
-        
-        if (error)
-        throw error;
-
-    results.forEach(results => {
-        console.log(results);
-    });
-
-    res.send(results)
-
-    })    
+    User.informeCarpooling(carpooler, email, cupos, (err, userData) => {
+        if (err) {
+            res.status(400).send({
+                message: err.message || "se produjo un error al actualizar el usuario.",
+                data: null,
+            });   
+        }
+        else {
+            res.status(200).send({
+                message: null,
+                data: userData
+            });
+        }
+    }); 
 }
 
 
@@ -457,9 +387,20 @@ export const eliminarUsuario = (req, res) => {
 
     const email = req.query.email;
 
-    conexion.query('DELETE FROM usuario WHERE email = "' + email + '"');
-    let eliminado = 'eliminado';
-    res.send(eliminado);
+    User.Delete(email, (err, userData) => {
+        if (err) {
+            res.status(400).send({
+                message: err.message || "se produjo un error al actualizar el usuario.",
+                data: null,
+            });   
+        }
+        else {
+            res.status(200).send({
+                message: null,
+                data: userData
+            });
+        }
+    });
 
 }
 

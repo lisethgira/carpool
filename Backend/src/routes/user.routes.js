@@ -4,11 +4,10 @@ import {authJwt} from '../middlewares';
 
 const router = Router();
 
-router.get('/listar', authJwt.verifyToken,userController.listarUsuario);
+router.get('/listar', userController.listarUsuario);
 router.get('/profile', authJwt.verifyToken, userController.getProfile);
 router.put('/actualizarUsuario', authJwt.verifyToken, userController.updateProfile);
-router.put('/actualizarDireccion',authJwt.verifyToken,userController.updateDirection);
-router.put('/actualizarCupos',authJwt.verifyToken,userController.updateCupos);
+router.put('/actualizarCupos', authJwt.verifyToken, userController.updateCupos);
 router.put('/cuposUsuario',authJwt.verifyToken,userController.updateCuposUsuario);
 router.put('/cuposCarpooler',authJwt.verifyToken,userController.updateCuposCarpooler);
 router.put('/actualizarReservas', authJwt.verifyToken,userController.updateReservaCliente);

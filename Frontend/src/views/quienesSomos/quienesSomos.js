@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
 
-class quienesSomos extends React.Component {
+
+const quienesSomos = (props) => {
  
-}
+};
+
+
+
 export default quienesSomos;

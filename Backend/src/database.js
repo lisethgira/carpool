@@ -18,7 +18,7 @@ pool.getConnection((err, conn)=>{
         }
     } else{
         if (conn) conn.release();
-        console.log("Se establecio conecion");
+        console.log("Se establecio conexión"); 
     }
     return
 })

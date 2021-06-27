@@ -6,7 +6,10 @@ import config from '../config';
 //crear nuevo usuario 
 export const signUp = async (req, res) => {
     
-    // tabla reserva
+    //tabla user
+   /* const {nombre, apellido, whatsapp,documento, telefono, email, clave, placaCarro,
+        dirOrigen, dirDestino, horaSalidaOrigen, horaSalidaDestino, diasServicio, carpooler, foto,
+        total, cupos} = req.body;*/
     const nombre = req.body.nombre;
     const apellido = req.body.apellido;
     const documento = req.body.documento;
@@ -23,8 +26,13 @@ export const signUp = async (req, res) => {
     });
 
     // Create a Customer
-    const newUser = new User({nombre, apellido, documento,telefono, email, 
-         clave: await User.encryptPassword(clave)
+    const newUser = new User({nombre,
+        apellido,
+        telefono,
+        email,
+        documento,
+        clave: await User.encryptPassword(clave),
+        foto,
     });
 
     User.create(newUser, (err, userData) => {

@@ -19,7 +19,7 @@ var authRoutes = [
     layout: "/auth",
   },
   {
-    path: "/quienesSomos",
+    path: "/quienes",
     name: "Quienes Somos",
     icon: "ni ni-tv-2 text-primary",
     component: quienesSomos,

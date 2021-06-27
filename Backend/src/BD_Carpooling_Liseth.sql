@@ -30,23 +30,21 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `inforeserva`;
 CREATE TABLE IF NOT EXISTS `inforeserva` (
-  `idInfoReserva` int(11) NOT NULL AUTO_INCREMENT,
-  `idUsuario2` int(11) NOT NULL,
-  `reserva` int(11) NOT NULL,
-  `telefonoCliente` double NOT NULL,
-  `whatsappCliente`varchar (100) NOT NULL,
-  `emailCliente` varchar(100) NOT NULL,
-  PRIMARY KEY (`idInfoReserva`),
-  UNIQUE KEY `idInfoReserva` (`idInfoReserva`),
-  KEY `aliasIdUsuario2` (`idUsuario2`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+   `idinfoReserva` int NOT NULL AUTO_INCREMENT,
+  `idUsuario2` int NOT NULL,
+  `reserva` int NOT NULL,
+  `emailCliente` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`idinfoReserva`),
+  KEY `FKidusuario_idx` (`idUsuario2`),
+  CONSTRAINT `FKidusuario` FOREIGN KEY (`idUsuario2`) REFERENCES `usuario` (`idUsuario`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=233 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `inforeserva`
 --
 
-INSERT INTO `inforeserva` (`idInfoReserva`, `idUsuario2`, `reserva`,`telefonoCliente`,`whatsappCliente`, `emailCliente`) VALUES
-(1, 2, 50,313515617,'https://wa.link/6c5rz2','tatianazz3@hotmail.com');
+INSERT INTO `inforeserva` (`idInfoReserva`, `idUsuario2`, `reserva`, `emailCliente`) VALUES
+(1, 2, 50,'tatianazz3@hotmail.com');
 
 -- --------------------------------------------------------
 
@@ -56,65 +54,54 @@ INSERT INTO `inforeserva` (`idInfoReserva`, `idUsuario2`, `reserva`,`telefonoCli
 
 DROP TABLE IF EXISTS `inscribir`;
 CREATE TABLE IF NOT EXISTS `inscribir` (
-  `idInscribir` int(11) NOT NULL AUTO_INCREMENT,
-  `idReserva` int(11) DEFAULT NULL,
-  `idUsuario3` int(11) NOT NULL,
-  `inscribir` int(11) NOT NULL,
-  `telefonoCarpooler` double NOT NULL,
-  `whatsappCarpooler`varchar (100) NOT NULL,
-  `emailCarpooler` varchar(100) NOT NULL,
-  `cuposReserva` int (4) NOT NULL,
-  PRIMARY KEY (`idInscribir`),
-  UNIQUE KEY `idInscribir` (`idInscribir`),
-  KEY `aliasIdUsuario3` (`idUsuario3`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
+  `idinscribir` int NOT NULL AUTO_INCREMENT,
+  `idUsuario3` int NOT NULL,
+  `cuposReserva` int NOT NULL,
+  `inscribir` int NOT NULL,
+  `emailCarpooler` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`idinscribir`)
+) ENGINE=InnoDB AUTO_INCREMENT=241 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `inscribir`
 --
 
-INSERT INTO `inscribir` (`idInscribir`, `idReserva`, `idUsuario3`, `inscribir`, `telefonoCarpooler`,`whatsappCarpooler`, `emailCarpooler`,`cuposReserva`) VALUES
-(1, NULL, 1, 1, 3105142774,'https://wa.link/bvrr35','lisethgiraldo628@gmail.com',3);
+INSERT INTO `inscribir` (`idInscribir`, `idUsuario3`,`cuposReserva`, `inscribir`, `emailCarpooler`) VALUES
+(1, 1, 1, 4,'lisethgiraldo628@gmail.com');
 
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `usuario`
 --
-
 DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE IF NOT EXISTS `usuario` (
-  `idUsuario` int(11) AUTO_INCREMENT NOT NULL ,
-  `nombre` varchar(25) NOT NULL,
-  `apellido` varchar(25) NOT NULL,
-  `telefono` double NOT NULL,
-  `whatsapp`varchar (100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `placaCarro` varchar(6) DEFAULT NULL,
-  `dirOrigen` varchar(100) NOT NULL,
-  `dirDestino` varchar(100) NOT NULL,
-  `horaSalidaOrigen` varchar(10) NOT NULL,
-  `horaSalidaDestino` varchar(10) NOT NULL,
-  `diasServicio`varchar(100)NOT NULL,
-  `documento` double NOT NULL,
-  `carpooler` int(11) NOT NULL,
-  `clave` varchar(100) NOT NULL,
-  `foto` varchar(400) NOT NULL,
-  `total` int(11) NOT NULL,
-  `cupos`int(4)NOT NULL,
-  PRIMARY KEY (`idUsuario`),
-  UNIQUE KEY `idUsuario` (`idUsuario`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+`idUsuario` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `apellido` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `telefono` double DEFAULT NULL,
+  `email` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `placaCarro` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `dirOrigen` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `dirDestino` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `horaSalidaOrigen` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `horaSalidaDestino` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `diasServicio` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `documento` double DEFAULT NULL,
+  `carpooler` int DEFAULT NULL,
+  `clave` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `foto` varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `total` int DEFAULT NULL,
+  `cupos` int DEFAULT NULL,
+  PRIMARY KEY (`idUsuario`)
+  ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 --
 -- Volcado de datos para la tabla `usuario`
 --
-
-INSERT INTO `usuario` (`idUsuario`, `nombre`, `apellido`, `telefono`, `whatsapp`,`email`, `placaCarro`, `dirOrigen`, `dirDestino`, `horaSalidaOrigen`, `horaSalidaDestino`, `diasServicio`,`documento`, `carpooler`, `clave`, `foto`, `total`,`cupos`) VALUES
-(1, 'Liseth Arelis', 'Giraldo Morales', 3105142774,'https://wa.link/bvrr35', 'Lisethgiraldo628@gmail.com', 'MDS345', 'Calle 51D #59A-44', 'Cra 52 #105-23', '05:00 pm', '06:00 pm','lunes-martes', 1036965346, 23, '12345', 'https://image.freepik.com/vector-gratis/diseno-ilustracion-vector-personaje-avatar-mujer-joven_24877-18520.jpg', 20000,4),
-(2, 'Luz Tatiana', 'Zapata', 3135151617,'https://wa.link/6c5rz2', 'tatianazz3@hotmail.com', 'MAD374', 'Calle 51 D 20 50', 'Cr 84 35 110', '07:00 am', '07:15am','lunes-martes-miercoles', 43929489, 25, '12345', 'https://image.freepik.com/vector-gratis/diseno-ilustracion-vector-personaje-avatar-mujer-joven_24877-18536.jpg', 6000,4);
+INSERT INTO `usuario` (`idUsuario`, `nombre`, `apellido`, `telefono`,`email`, `placaCarro`, `dirOrigen`, `dirDestino`, `horaSalidaOrigen`, `horaSalidaDestino`, `diasServicio`,`documento`, `carpooler`, `clave`, `foto`, `total`,`cupos`) VALUES
+(1, 'Liseth Arelis', 'Giraldo Morales', 3105142774, 'Lisethgiraldo628@gmail.com', 'MDS345', 'Calle 51D #59A-44', 'Cra 52 #105-23', '05:00', '06:00','lunes-martes', 1036965346, 23, '12345', 'https://image.freepik.com/vector-gratis/diseno-ilustracion-vector-personaje-avatar-mujer-joven_24877-18520.jpg', 20000,4),
+(2, 'Luz Tatiana', 'Zapata', 3135151617, 'tatianazz3@hotmail.com', 'MAD374', 'Calle 51 D 20 50', 'Cr 84 35 110', '07:00', '07:15','lunes-martes-miercoles', 43929489, 25, '12345', 'https://image.freepik.com/vector-gratis/diseno-ilustracion-vector-personaje-avatar-mujer-joven_24877-18536.jpg', 6000,4);
 COMMIT;
-
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
