@@ -1,6 +1,7 @@
 
 import Carpool from "views/Index.js";
 import Profile from "views/PerfilUsuario/PerfilUsuario.js";
+import funcionesUsuario from "views/funcionesUsuario/funcionesUsuario.js";
 import Maps from "views/Map/Map.js";
 import Reservas from "views/reservas/reservas.js";
 
@@ -19,6 +20,13 @@ var routes = [
     name: "Perfil Usuario",
     icon: "ni ni-single-02 text-yellow",
     component: Profile,
+    layout: "/admin",
+  },
+  {
+    path: "/funcionesUsuario",
+    name: "funciones de Usuario",
+    icon: "ni ni-user-run text-green",
+    component: funcionesUsuario,
     layout: "/admin",
   },
   {

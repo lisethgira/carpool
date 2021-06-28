@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom"
 // reactstrap components
 import {
   Button,
@@ -119,6 +119,15 @@ const Register = () => {
             </Form>
           </CardBody>
         </Card>
+        <Row className="mt-2">
+          <Col className="text-right" xs="12" to="/auth/login" tag={Link}>
+            <a
+              className="text-light"
+            >
+              <small >Sign in</small>
+            </a>
+          </Col>
+        </Row>
       </Col>
     </>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom"
 // reactstrap components
 import {
   Button,
@@ -86,23 +86,12 @@ const Login = () => {
             </Form>
           </CardBody>
         </Card>
-        <Row className="mt-3">
-          <Col xs="6">
+        <Row className="mt-2">
+          <Col className="text-right" xs="12" to="/auth/register" tag={Link}>
             <a
               className="text-light"
-              href="#pablo"
-              onClick={(e) => e.preventDefault()}
             >
-              <small>Forgot password?</small>
-            </a>
-          </Col>
-          <Col className="text-right" xs="6">
-            <a
-              className="text-light"
-              href="auth/register"
-              onClick={(e) => e.preventDefault()}
-            >
-              <small>Create new account</small>
+              <small >Create new account</small>
             </a>
           </Col>
         </Row>

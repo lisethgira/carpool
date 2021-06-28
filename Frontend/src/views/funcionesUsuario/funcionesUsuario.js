@@ -2,164 +2,293 @@ import React from "react";
 
 
 import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  FormGroup,
-  Form,
-  Input,
-  Container,
-  Row,
-  Col,
+    Button,
+    Card,
+    CardHeader,
+    CardBody,
+    FormGroup,
+    Form,
+    Input,
+    Container,
+    Row,
+    Col,
+    Modal,
+    InputGroupText
 } from "reactstrap";
 // core components
-import UserHeader from "components/Headers/UserHeader.js";
+import Header from "components/Headers/Header.js";
+
 
 const funcionesUsuario = () => {
-  return (
-    <>
-      <Header />
-      {/* Page content */}
-      <Container className="mt--7" fluid>
-        <Row>
-          <Col className="order-xl-1" xl="8">
-            <Card className="bg-secondary shadow">
-              <CardHeader className="bg-white border-0">
-                <Row className="align-items-center">
-                  <Col xs="8">
-                    <h3 className="mb-0">My account</h3>
-                  </Col>
+
+    return (
+        <>
+            <Header />
+            {/* Page content */}
+            <Container style={{ marginBottom: "10%" }}>
+
+            </Container>
+            <Container className="mt--7" fluid style={{ marginLeft: "20%" }}>
+                <Row>
+                    <Col className="order-xl-1" xl="8">
+                        <Card className="bg-info shadow">
+                            <CardHeader className="bg-info border-0">
+                                <Row className="align-items-center">
+                                    <Col xs="12">
+                                        <h1 className="mb-0" style={{ textAlign: "center", color: "violet" }}>Aquí puedes modificar tu rol de usuario y crear un viaje en caso de que seas carpooler</h1>
+                                    </Col>
+                                </Row>
+                            </CardHeader>
+                            <CardBody>
+                                <Form>
+                                    <div className="pl-lg-4">
+                                        <Row>
+                                            <Col lg="12">
+                                                <FormGroup>
+
+                                                    <div>
+                                                        <h4 className="title titulocarpooler fadeIn third" style={{ paddingBottom: "0%" }}>
+                                                            ¿Quieres ser Carpooling?
+                                                        </h4>
+                                                    </div>
+
+                                                    <div className="form-check form-check-inline col-md-1 fadeIn third"
+
+                                                    >
+                                                        <input
+                                                            className="form-check-input fadeIn third"
+                                                            type="radio"
+                                                            name="inlineRadioOptions"
+                                                        />
+
+                                                        <label
+                                                            class="form-check-label fadeIn third"
+                                                            for="inlineRadio1"
+                                                            style={{ marginLeft: "15%", paddingTop: "0%" }}
+                                                        >Si
+                                                        </label>
+                                                    </div>
+
+                                                    <div className="form-check form-check-inline col-md-1 fadeIn third"
+
+                                                    >
+                                                        <input
+                                                            className="form-check-input fadeIn third"
+                                                            type="radio"
+                                                            name="inlineRadioOptions"
+                                                        />
+
+                                                        <label
+                                                            class="form-check-label fadeIn third"
+                                                            for="inlineRadio1"
+                                                            style={{ marginLeft: "20%", paddingTop: "0%" }}
+                                                        >No
+                                                        </label>
+                                                    </div>
+                                                    <Button style={{ marginLeft: "70%" }}
+                                                        color="primary"
+                                                        href="#pablo"
+                                                        onClick={(e) => e.preventDefault()}
+                                                    >
+                                                        cambiar rol
+                                                    </Button>
+                                                </FormGroup>
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                </Form>
+                                <Form>
+                                    <div className="pl-lg-4">
+                                        <div>
+                                            <h4 className="title titulocarpooler fadeIn third" style={{ paddingBottom: "0%" }}>
+                                                Crea tu servicio</h4>
+                                        </div>
+                                        <Row>
+                                            <Col lg="6">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-horaSalidaOrigen"
+                                                    >
+                                                        Hora de Salida
+                                                    </label>
+                                                    <Input
+                                                        className="form-control-alternative"
+                                                        type="time"
+                                                        ps-input-time
+                                                        format="hh:mm"
+                                                        placeholder="Hora de salida de Origen"
+                                                        id="input-horaSalidaOrigen"
+                                                        name="horaSalidaOrigen"
+                                                    />
+                                                </FormGroup>
+                                            </Col>
+                                            <Col lg="6">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-horaSalidaDestino"
+                                                    >
+                                                        Hora de LLegada
+                                                    </label>
+                                                    <Input
+                                                        className="form-control-alternative"
+                                                        type="time"
+                                                        ps-input-time
+                                                        format="hh:mm"
+                                                        placeholder="Hora de llegada a Destino"
+                                                        id="input-horaSalidaDestino"
+                                                        name="horaSalidaDestino"
+                                                    />
+                                                </FormGroup>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col lg="6">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-placa"
+                                                    >
+                                                        Placa
+                                                    </label>
+                                                    <Input
+                                                        className="form-control-alternative"
+                                                        id="input-placa"
+                                                        placeholder="XPT456"
+                                                        name="placa"
+                                                        maxlength="6"
+                                                    />
+                                                </FormGroup>
+                                            </Col>
+                                            <Col lg="6">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-cupos"
+                                                    >
+                                                        cupos
+                                                    </label>
+                                                    <Input
+                                                        type="text"
+                                                        className="form-control-alternative"
+                                                        id="input-cupos"
+                                                        placeholder="4"
+                                                        name="cupos"
+                                                        maxlength="6"
+                                                    />
+                                                </FormGroup>
+                                            </Col>
+                                        </Row>
+
+                                        <Row>
+                                            <Col lg="6">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-diasServicio"
+                                                    >
+                                                        Días de Servicio
+                                                    </label>
+                                                    <Input
+                                                        className="form-control-alternative"
+                                                        id="input-diasServicio"
+                                                        placeholder="Dias de servicio"
+                                                        type="button"
+                                                        name="diasServicio"
+                                                        data-toggle="modal"
+                                                        data-target="#dias"
+                                                    />
+                                                </FormGroup>
+                                            </Col>
+                                            <Col lg="6">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-total"
+                                                    >
+                                                        Valor del Viaje
+                                                    </label>
+                                                    <Input
+                                                        className="form-control-alternative "
+                                                        id="input-total"
+                                                        placeholder="2000"
+                                                        type="number"
+                                                        name="total"
+                                                    />
+                                                </FormGroup>
+                                            </Col>
+                                        </Row>
+
+
+                                        <div>
+                                            <h4 className="title titulocarpooler fadeIn third" style={{ paddingBottom: "0%" }}>
+                                                Agrega tu ruta</h4>
+                                        </div>
+                                        <Row>
+                                            <Col lg="6">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-dirOrigen"
+                                                    >
+                                                        Dirección de Origen
+                                                    </label>
+                                                    <Input
+                                                        className="form-control-alternative"
+                                                        placeholder="Hora de salida de Origen"
+                                                        id="input-dirOrigen"
+                                                        name="dirOrigen"
+                                                        disabled
+                                                    />
+                                                </FormGroup>
+                                            </Col>
+                                            <Col lg="6">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-dirDestino"
+                                                    >
+                                                        Dirección de Destino
+                                                    </label>
+                                                    <Input
+                                                        className="form-control-alternative"
+                                                        placeholder="Hora de llegada a Destino"
+                                                        id="input-dirDestino"
+                                                        name="dirDestino"
+                                                        disabled
+                                                    />
+                                                </FormGroup>
+                                            </Col>
+                                        </Row>
+                                        <Button style={{ marginLeft: "70%" }}
+                                            color="primary"
+                                            href="#pablo"
+                                            onClick={(e) => e.preventDefault()}
+                                        >
+                                            Agregar Ruta
+                                        </Button>
+
+
+                                        <Button style={{ marginLeft: "70%", marginTop: "5%" }}
+                                            color="success"
+                                            href="#pablo"
+                                            onClick={(e) => e.preventDefault()}
+                                            data-toggle="modal"
+                                            data-target="#squarespaceModal"
+                                            id="agregarDireccion"
+                                            name="agregarDireccion"
+                                        >
+                                            Crear Servicio
+                                        </Button>
+                                    </div>
+                                </Form>
+                            </CardBody>
+                        </Card>
+                    </Col>
                 </Row>
-              </CardHeader>
-              <CardBody>
-                <Form>
-                  <h6 className="heading-small text-muted mb-4">
-                    User information
-                  </h6>
-                  <div className="pl-lg-4">
-                    <Row>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-nombre"
-                          >
-                            Nombre
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="liseth"
-                            id="input-nombre"
-                            placeholder="nombre"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-apellido"
-                          >
-                            Apellido
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="Giraldo"
-                            id="input-apellido"
-                            placeholder="Apellido"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-
-
-                    <Row>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-documento"
-                          >
-                            Documento
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            id="input-docuento"
-                            placeholder="1036965346"
-                            type="number"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-telefoo"
-                          >
-                            Teléfono
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            id="input-telefono"
-                            placeholder="3105142774"
-                            type="number"
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-
-                    <Row>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-email"
-                          >
-                            Email
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            id="input-email"
-                            placeholder="holamundo@example.com"
-                            type="email"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-foto"
-                          >
-                            foto
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            id="input-foto"
-                            placeholder="https://image.freepik.com/vector-gratis/diseno-ilustracion-vector-personaje-avatar-mujer-joven_24877-18520.jpg"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <Button style={{marginLeft:"70%"}}
-                      color="info"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Actualizar Perfil
-                    </Button>
-                  </div>
-                </Form>
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
-    </>
-  );
+            </Container>
+        </>
+    );
 };
 export default funcionesUsuario;
