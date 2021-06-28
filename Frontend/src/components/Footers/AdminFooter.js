@@ -14,9 +14,9 @@ const Footer = () => {
                 © {new Date().getFullYear()}{" "}
                 <a
                   className="font-weight-bold ml-1"
-                  href="https://github.com/lisethgira"
+                  href="https://github.com/lisethgira/carpool"
                   target="_blank">
-                  Liseth Giraldo
+                  Liseth Giraldo - lisethgiraldo628@gmail.com
                 </a>
               </div>
             </Col>
@@ -24,16 +24,16 @@ const Footer = () => {
               <Nav className="nav-footer justify-content-center justify-content-xl-end">
                 <NavItem>
                   <NavLink
-                    href="https://github.com/lisethgira"
+                    href="https://www.linkedin.com/in/liseth-giraldo-251605140/"
                     target="_blank">
-                    Liseth Giraldo
+                    Linkedin
                   </NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink
-                    href="https://github.com/rafodelmal/reto_car_pooling_liseth"
+                    href="https://www.instagram.com/liseth_giraldo628/"
                     target="_blank">
-                    Repositorio
+                    Instagram
                   </NavLink>
                 </NavItem>
               </Nav>

@@ -148,6 +148,7 @@ export default class mainMapComp extends Component {
             <>
             <Header />
             {/* Page content */}
+            <Container style={{marginBottom:"10%"}}></Container>
             <Container className="mt--7" fluid>
         <Row>
         <div className="col">

@@ -4,6 +4,13 @@ import Login from "views/Login/Login.js";
 import quienesSomos from "views/quienesSomos/quienesSomos.js"
 
 var authRoutes = [
+  {
+    path: "/quienes",
+    name: "quienesSomos",
+    icon: "ni ni-tv-2 text-primary",
+    component: quienesSomos,
+    layout: "/auth",
+  },
 {
     path: "/login",
     name: "Login",
@@ -18,12 +25,6 @@ var authRoutes = [
     component: Register,
     layout: "/auth",
   },
-  {
-    path: "/quienes",
-    name: "Quienes Somos",
-    icon: "ni ni-tv-2 text-primary",
-    component: quienesSomos,
-    layout: "/auth",
-  },
+  
 ];
 export default authRoutes;

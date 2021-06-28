@@ -1,6 +1,6 @@
 
 import Carpool from "views/Index.js";
-import Profile from "views/examples/Profile.js";
+import Profile from "views/PerfilUsuario/PerfilUsuario.js";
 import Maps from "views/Map/Map.js";
 import Reservas from "views/reservas/reservas.js";
 
@@ -15,7 +15,7 @@ var routes = [
   },
 
   {
-    path: "/usuario",
+    path: "/perfilUsuario",
     name: "Perfil Usuario",
     icon: "ni ni-single-02 text-yellow",
     component: Profile,

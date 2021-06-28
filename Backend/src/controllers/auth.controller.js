@@ -16,6 +16,7 @@ export const signUp = async (req, res) => {
     const telefono = req.body.telefono;
     const email = req.body.email;
     const clave = req.body.clave;
+    const foto = req.body.foto;
 
     //Buscar Si existe Email
     const userFound = await User.findByEmail({email});
@@ -32,7 +33,7 @@ export const signUp = async (req, res) => {
         email,
         documento,
         clave: await User.encryptPassword(clave),
-        foto,
+        foto
     });
 
     User.create(newUser, (err, userData) => {

@@ -10,11 +10,6 @@ import {
   DropdownItem,
   UncontrolledDropdown,
   DropdownToggle,
-  Form,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
   Media,
   NavbarBrand,
   Navbar,
@@ -77,11 +72,12 @@ const Sidebar = (props) => {
 
   return (
     <Navbar
-      className="navbar-vertical fixed-left navbar-light bg-white"
+      className="navbar-vertical fixed-left navbar-light bg-black "
+      style={{background: "linear-gradient(90deg, rgba(0,212,255,1) 0%, rgba(31,140,215,1) 65%, rgba(21,74,227,1) 100%)"}}
       expand="md"
       id="sidenav-main"
     >
-      <Container fluid>
+      <Container fluid >
         {/* Toggler */}
         <button
           className="navbar-toggler"
@@ -103,28 +99,13 @@ const Sidebar = (props) => {
         {/* User */}
         <Nav className="align-items-center d-md-none">
           <UncontrolledDropdown nav>
-            <DropdownToggle nav className="nav-link-icon">
-              <i className="ni ni-bell-55" />
-            </DropdownToggle>
-            <DropdownMenu
-              aria-labelledby="navbar-default_dropdown_1"
-              className="dropdown-menu-arrow"
-              right
-            >
-              <DropdownItem>Action</DropdownItem>
-              <DropdownItem>Another action</DropdownItem>
-              <DropdownItem divider />
-              <DropdownItem>Something else here</DropdownItem>
-            </DropdownMenu>
-          </UncontrolledDropdown>
-          <UncontrolledDropdown nav>
             <DropdownToggle nav>
               <Media className="align-items-center">
                 <span className="avatar avatar-sm rounded-circle">
                   <img
                     alt="..."
                     src={
-                      require("../../assets/img/theme/team-1-800x800.jpg")
+                      require("../../assets/img/avatar.jpg")
                         .default
                     }
                   />
@@ -135,9 +116,10 @@ const Sidebar = (props) => {
               <DropdownItem className="noti-title" header tag="div">
                 <h6 className="text-overflow m-0">¡Bienvenid@!</h6>
               </DropdownItem>
-              <DropdownItem to="/admin/user-profile" tag={Link}>
+              <DropdownItem to="/admin/perfilUsuario" tag={Link}>
                 <i className="ni ni-single-02" />
                 <span>Mi Perfil</span>
+                
               </DropdownItem>
               <DropdownItem divider />
               <DropdownItem href="/auth/login" onClick={(e) => e.preventDefault()}>
@@ -177,22 +159,6 @@ const Sidebar = (props) => {
               </Col>
             </Row>
           </div>
-          {/* Form */}
-          <Form className="mt-4 mb-3 d-md-none">
-            <InputGroup className="input-group-rounded input-group-merge">
-              <Input
-                aria-label="Search"
-                className="form-control-rounded form-control-prepended"
-                placeholder="Search"
-                type="search"
-              />
-              <InputGroupAddon addonType="prepend">
-                <InputGroupText>
-                  <span className="fa fa-search" />
-                </InputGroupText>
-              </InputGroupAddon>
-            </InputGroup>
-          </Form>
           {/* Navigation */}
           <Nav navbar>{createLinks(routes)}</Nav>
         </Collapse>

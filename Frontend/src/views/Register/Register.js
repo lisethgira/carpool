@@ -45,8 +45,6 @@ const Register = () => {
                   </InputGroupAddon>
                   <Input placeholder="Nombre" type="text" />
                 </InputGroup>
-              </FormGroup>
-              <FormGroup>
                 <InputGroup className="input-group-alternative mb-3">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
@@ -65,8 +63,6 @@ const Register = () => {
                   </InputGroupAddon>
                   <Input placeholder="Documento" type="text" />
                 </InputGroup>
-              </FormGroup>
-              <FormGroup>
                 <InputGroup className="input-group-alternative mb-3">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
@@ -89,9 +85,7 @@ const Register = () => {
                     autoComplete="new-email"
                   />
                 </InputGroup>
-              </FormGroup>
-              <FormGroup>
-                <InputGroup className="input-group-alternative">
+                <InputGroup className="input-group-alternative mb-3">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
                       <i className="ni ni-lock-circle-open" />
@@ -102,36 +96,21 @@ const Register = () => {
                     type="password"
                     autoComplete="new-password"
                   />
+                   </InputGroup>
+              </FormGroup> 
+              <FormGroup>
+                  <InputGroup className="input-group-alternative mb-3">
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText>
+                      <i className="ni ni-image" />
+                    </InputGroupText>
+                  </InputGroupAddon>
+                  <Input
+                    placeholder="foto"
+                    type="text"
+                  />
                 </InputGroup>
-              </FormGroup>
-              <div className="text-muted font-italic">
-                <small>
-                  password strength:{" "}
-                  <span className="text-success font-weight-700">strong</span>
-                </small>
-              </div>
-              <Row className="my-4">
-                <Col xs="12">
-                  <div className="custom-control custom-control-alternative custom-checkbox">
-                    <input
-                      className="custom-control-input"
-                      id="customCheckRegister"
-                      type="checkbox"
-                    />
-                    <label
-                      className="custom-control-label"
-                      htmlFor="customCheckRegister"
-                    >
-                      <span className="text-muted">
-                        I agree with the{" "}
-                        <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                          Privacy Policy
-                        </a>
-                      </span>
-                    </label>
-                  </div>
-                </Col>
-              </Row>
+                </FormGroup>
               <div className="text-center">
                 <Button className="mt-4" color="primary" type="button">
                   Create account
