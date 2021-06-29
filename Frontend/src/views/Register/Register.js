@@ -120,7 +120,8 @@ class Register extends Component {
                         <i className="ni ni-single-02" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Nombre" type="text" />
+                    <Input placeholder="Nombre" type="text" name="nombre"
+                      onChange={this.manejadorChange}/>
                   </InputGroup>
                   <InputGroup className="input-group-alternative mb-3">
                     <InputGroupAddon addonType="prepend">
