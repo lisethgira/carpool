@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from "react-router-dom";
-// reactstrap components
+import { loginActions } from '../../redux/actions'
 import {
   DropdownMenu,
   DropdownItem,
@@ -19,6 +20,17 @@ const AdminNavbar = (props) => {
     await dispatch(logout())
     Notify({ value: 'Logged out!!' })
   }*/
+
+  const logout = useSelector(({ login }) => login.logout)
+
+  const dispatch = useDispatch()
+  const handleLogout = () => dispatch(loginActions.logout())
+
+  useEffect(() => {
+    if (logout) props.history.push('/auth/login')
+    console.log(logout)
+  }, [logout])
+
   return (
     <>
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
@@ -59,7 +71,7 @@ const AdminNavbar = (props) => {
                   <span>Mi perfil</span>
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem href="/auth/login" onClick={(e) => e.preventDefault()}>
+                <DropdownItem onClick={handleLogout}>
                   <i className="ni ni-user-run" />
                   <span>Logout</span>
                 </DropdownItem>

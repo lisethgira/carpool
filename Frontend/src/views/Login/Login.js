@@ -1,194 +1,128 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom"
-// reactstrap components
+import React, { useEffect } from 'react'
 import {
   Button,
   Card,
   CardBody,
   FormGroup,
   Form,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
   Row,
   Col,
 } from "reactstrap";
+import { Link } from "react-router-dom"
+import { Controller, useForm } from 'react-hook-form'
+import { TextField } from '@material-ui/core'
+import { loginActions } from '../../redux/actions'
+import { useDispatch, useSelector } from 'react-redux'
 
-import Cookies from 'universal-cookie';
-import axios from "axios";
+export default function Login({ history }) {
 
+  const data = useSelector(({ login }) => login.data)
+  const loading = useSelector(({ login }) => login.loading)
+  const logout = useSelector(({ login }) => login.logout)
 
-const cookies = new Cookies();
+  const dispatch = useDispatch()
+  const handleLogin = (d) => dispatch(loginActions.login(d))
 
-class Login extends Component {
+  useEffect(() => {
+    if (!data) history.push('/auth/login')
+    else history.push('/admin')
+  }, [data])
 
+  useEffect(() => {
+    if (logout) history.push('/auth/login')
+    console.log(logout)
+  }, [logout])
 
-  constructor(props) {
-    super(props);
-  }
+  const { handleSubmit, control, formState: { errors } } = useForm();
 
-  state = {
-    form: {
-      "email": "",
-      "clave": ""
-    },
-    error: false,
-    errorMsg: ""
-  }
+  const onSubmit = (data) => handleLogin(data)
 
-  manejadorSubmit = e => {
-    e.preventDefault();
-  }
-
-  manejadorChange = (e) => {
-    this.setState({
-      form: {
-        ...this.state.form,
-        [e.target.name]: e.target.value
+  const tfUsername = (
+    <Controller
+      defaultValue=""
+      render={({ field }) => (
+        <TextField
+          label="Usuario"
+          margin="normal"
+          variant="outlined"
+          fullWidth
+          disabled={loading}
+          error={(errors.email ? true : false)}
+          helperText={(errors.email ? errors.email.message : "")}
+          {...field}
+        />)
       }
-    })
-  }
+      name="email"
+      control={control}
+      rules={{ required: "Campo requerido" }}
+    />
+  )
 
-  manejadorBoton = async () => {
-    const headers = {
-      'Content-Type': 'application/json',
-    }
-    console.log(this.state.form);
-    const baseUrl = "http://localhost:5000/api/auth/login"
-    axios.post(baseUrl, this.state.form, {
-      headers: headers
-    })
-      .then(response => {
+  const tfPassword = (
+    <Controller
+      defaultValue=""
+      render={({ field }) => (
+        <TextField
+          label="Contraseña"
+          margin="normal"
+          variant="outlined"
+          fullWidth
+          disabled={loading}
+          type="password"
+          error={(errors.clave && Boolean(errors.clave))}
+          helperText={(errors.clave ? errors.clave.message : "")}
+          {...field}
+        />)
+      }
+      name="clave"
+      control={control}
+      rules={{ required: "Campo requerido" }}
+    />
+  )
 
-        if (response.status == 200) {
-          localStorage.setItem("token", response.data.token);
-          this.props.history.push("./admin/index");
-          cookies.set("token", response.data.token);
-          cookies.set("customer", response.data);
-          cookies.set('nombre', '', response.nombre );
-          cookies.set('apellido', '', response.apellido);
-          cookies.set('foto', '1', response.foto);
-          window.location.href = "/admin/index";
-        } else if (response.status == 400) {
-          this.setState({
-            error: true,
-            errorMsg: "nada" + response.data.message
-          })
-        }
-        else {
-          this.setState({
-            error: true,
-            errorMsg: "Error General"
-          })
-        }
-      }).catch(error => {
-        if (error.response.status == 400) {
-          this.setState({
-            error: true,
-            errorMsg: error.response.data.message
-          })
-        } else {
-          this.setState({
-            error: true,
-            errorMsg: "Error al conectarse con el api"
-          })
-        }
-
-      })
-  }
-
-  /*componentDidMount() {
-    let token = cookies.get('token');
-    if (token != null) {
-      window.location.href = "/auth/login";
-    }
-  }*/
-
-
-  render() {
-    return (
-      <>
-        <Col lg="5" md="7">
-          <Card className="bg-secondary shadow border-0">
-            <CardBody className="px-lg-5 py-lg-5">
-              <span className="btn-inner--icon">
-                <img style={{ height: 90, width: 90, marginLeft: 130, marginTop: 5, marginBottom: 15 }}
-                  alt="..."
-                  src={
-                    require("../../assets/img/logoSinFodo.jpg")
-                      .default
-                  }
-                />
-              </span>
-              <div className="text-center text-muted mb-4">
-                <small> Sign in with credentials</small>
-              </div>
-              <Form onSubmit={this.manejadorSubmit}>
-                <FormGroup className="mb-3">
-                  <InputGroup className="input-group-alternative">
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="ni ni-email-83" />
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input
-                      id="email"
-                      name="email"
-                      placeholder="Email"
-                      type="email"
-                      autoComplete="new-email"
-                      onChange={this.manejadorChange}
-                    />
-                  </InputGroup>
-                </FormGroup>
-                <FormGroup>
-                  <InputGroup className="input-group-alternative">
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="ni ni-lock-circle-open" />
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input
-                      id="clave"
-                      name="clave"
-                      placeholder="Password"
-                      type="password"
-                      autoComplete="new-password"
-                      onChange={this.manejadorChange}
-                    />
-                  </InputGroup>
-                </FormGroup>
-                <div>
-                  {this.state.error === true &&
-                    <div className="alert alert-danger" role="alert">
-                      {this.state.errorMsg}
-                    </div>
-                  }
+  return (
+    <Col lg="5" md="7">
+      <Card className="bg-secondary shadow border-0">
+        <CardBody className="px-lg-5 py-lg-5">
+          <span className="btn-inner--icon">
+            <img style={{ height: 90, width: 90, marginLeft: 130, marginTop: 5, marginBottom: 15 }}
+              alt="..."
+              src={
+                require("../../assets/img/logoSinFodo.jpg")
+                  .default
+              }
+            />
+          </span>
+          <div className="text-center text-muted mb-4">
+            <small> Sign in with credentials </small>
+          </div>
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <FormGroup className="mb-3">
+              {tfUsername}
+            </FormGroup>
+            <FormGroup>
+              {tfPassword}
+            </FormGroup>
+            <div>
+              {/* {this.state.error === true &&
+                <div className="alert alert-danger" role="alert">
+                  {this.state.errorMsg}
                 </div>
-                <div className="text-center">
-                  <Button className="my-4" color="primary" type="submit" onClick={this.manejadorBoton}>
-                    Sign in
-                  </Button>
-                </div>
-              </Form>
-
-            </CardBody>
-          </Card>
-          <Row className="mt-2">
-            <Col className="text-right" xs="12" to="/auth/register" tag={Link}>
-              <a
-                className="text-light"
-              >
-                <small >Create new account</small>
-              </a>
-            </Col>
-          </Row>
+              } */}
+            </div>
+            <div className="text-center">
+              <Button className="my-4" color="primary" type="submit"> Sign in </Button>
+            </div>
+          </Form>
+        </CardBody>
+      </Card>
+      <Row className="mt-2">
+        <Col className="text-right" xs="12" to="/auth/register" tag={Link}>
+          <a className="text-light">
+            <small >Create new account</small>
+          </a>
         </Col>
-      </>
-    );
-  };
-};
-
-
-export default Login;
+      </Row>
+    </Col>
+  )
+}
