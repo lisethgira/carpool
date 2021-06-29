@@ -15,7 +15,9 @@ import {
     InputGroupText
 } from "reactstrap";
 
-const calcularRuta = () => {
+class calcularRuta extends React.Component {
+
+    render() {
     return (
         <>
             <div className="clearfix"></div>
@@ -103,5 +105,6 @@ const calcularRuta = () => {
             </div>
         </>
     )
+};
 };
 export default calcularRuta;

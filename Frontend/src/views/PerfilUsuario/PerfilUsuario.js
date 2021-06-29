@@ -1,4 +1,8 @@
-import React from "react";
+
+import React, { Component} from "react";
+
+import Cookies from 'universal-cookie';
+import axios from "axios";
 
 
 import {
@@ -16,7 +20,107 @@ import {
 // core components
 import UserHeader from "components/Headers/UserHeader.js";
 
-const perfilUsuario = () => {
+const cookies = new Cookies();
+
+
+class perfilUsuario extends Component {
+  state = {
+    form: {
+      "nombre": "",
+      "apellido": "",
+      "clave": "",
+      "documento": "",
+      "telefono": "",
+      "email": "",
+      "foto": ""
+    },
+    error: false,
+    success: false,
+    errorMsg: ""
+  }
+
+  manejadorSubmit = e => {
+    e.preventDefault();
+  }
+
+  manejadorChange = (e) => {
+    this.setState({
+      form: {
+        ...this.state.form,
+        [e.target.name]: e.target.value
+      }
+    })
+  }
+
+
+
+  peticionGet=()=>{
+    const perfilUrl ="http://localhost:5000/api/admin/profile"
+    const headers = {
+      'Content-Type': 'application/json',
+    }
+    
+    console.log(this.state.form);
+    axios.get(perfilUrl).then(response=>{
+     JSON.stringify(this.state.form);
+     headers = {
+      'Content-Type': 'application/json',
+    }
+      this.setState(error =>console.log({error:true,
+        errorMsg: "Se tragieron los datos del usuario correctamente"}));
+    }).catch(error=>{
+      console.log({error: true,
+        errorMsg: error.response.data.message});
+    })
+    }
+
+  manejadorBoton = async () => {
+    const headers = {
+      'Content-Type': 'application/json',
+    }
+    console.log(this.state.form);
+    const baseUrl = "http://localhost:5000/api/admin/actualizarUsuario"
+    axios.put(baseUrl, this.state.form, {
+      headers: headers
+    })
+      .then(response => {
+        this.peticionGet();
+        if(response.status == 200){
+          window.location.href = "./admin/perfilUsuario";
+          this.setState({
+            success: true,
+            errorMsg: "Se actualizo correctamente"
+          })
+        } else if(response.status == 400){
+          this.setState({
+            error: true,
+            errorMsg: "nada" + response.data.message
+          })
+        }
+        else {
+          this.setState({
+            error: true,
+            errorMsg: "Error General"
+          })
+        }
+      }).catch(error => {
+        if( error.response.status == 400){
+          this.setState({
+            error: true,
+            errorMsg: error.response.data.message
+          })
+        } else {
+          this.setState({
+            error: true,
+            errorMsg: "Error al conectarse con el api"
+          })
+        }
+        
+      })
+  }
+
+
+  render() {
   return (
     <>
       <UserHeader />
@@ -31,10 +135,7 @@ const perfilUsuario = () => {
                     <img
                       alt="..."
                       className="rounded-circle"
-                      src={
-                        require("../../assets/img/avatar.jpg")
-                          .default
-                      }
+                      src={this.manejadorChange.foto}
                     />
                   </div>
                 </Col>
@@ -42,17 +143,20 @@ const perfilUsuario = () => {
               <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4" style={{ marginTop: "40%" }}>
                 <CardBody className="pt-0 pt-md-4" >
                   <div className="text-center">
-                    <h3>
-                      Jessica Jones
-                      <span className="font-weight-light">, 27</span>
+                    <h3 name="apellido">
+                      Nombre : {this.manejadorChange.nombre} {this.manejadorChange.apellido}
                     </h3>
                     <div className="h5 font-weight-300">
                       <i className="ni location_pin mr-2" />
-                      Bucharest, Romania
+                      Documento : {this.manejadorChange.documneto}
                     </div>
                     <div className="h5 font-weight-300">
                       <i className="ni location_pin mr-2" />
-                      Bucharest, Romania
+                      teléfono : {this.manejadorChange.telefono}
+                    </div>
+                    <div className="h5 font-weight-300">
+                      <i className="ni location_pin mr-2" />
+                      email : {this.manejadorChange.email}
                     </div>
                   </div>
                 </CardBody>
@@ -89,6 +193,8 @@ const perfilUsuario = () => {
                             id="input-nombre"
                             placeholder="nombre"
                             type="text"
+                            name="nombre"
+                            onChange={this.manejadorChange}
                           />
                         </FormGroup>
                       </Col>
@@ -106,6 +212,8 @@ const perfilUsuario = () => {
                             id="input-apellido"
                             placeholder="Apellido"
                             type="text"
+                            name="apellido"
+                            onChange={this.manejadorChange}
                           />
                         </FormGroup>
                       </Col>
@@ -126,6 +234,8 @@ const perfilUsuario = () => {
                             id="input-docuento"
                             placeholder="1036965346"
                             type="number"
+                            name="documento"
+                            onChange={this.manejadorChange}
                           />
                         </FormGroup>
                       </Col>
@@ -142,6 +252,8 @@ const perfilUsuario = () => {
                             id="input-telefono"
                             placeholder="3105142774"
                             type="number"
+                            name="telefono"
+                            onChange={this.manejadorChange}
                           />
                         </FormGroup>
                       </Col>
@@ -161,6 +273,8 @@ const perfilUsuario = () => {
                             id="input-email"
                             placeholder="holamundo@example.com"
                             type="email"
+                            name="email"
+                            onChange={this.manejadorChange}
                           />
                         </FormGroup>
                       </Col>
@@ -177,14 +291,32 @@ const perfilUsuario = () => {
                             id="input-foto"
                             placeholder="https://image.freepik.com/vector-gratis/diseno-ilustracion-vector-personaje-avatar-mujer-joven_24877-18520.jpg"
                             type="text"
+                            name="foto"
+                            onChange={this.manejadorChange}
                           />
                         </FormGroup>
                       </Col>
                     </Row>
-                    <Button style={{marginLeft:"70%"}}
+                    <div>
+                  {this.state.error === true &&
+                    <div className="alert alert-danger" role="alert">
+                      {this.state.errorMsg}
+                    </div>
+                  }
+
+                  {this.state.success === true &&
+                    <div className="alert alert-success" role="alert">
+                      {this.state.errorMsg}
+                    </div>
+                  }
+                </div>
+                    <Button
+                    type="submit" 
+                    style={{marginLeft:"70%"}}
                       color="info"
                       href="#pablo"
-                      onClick={(e) => e.preventDefault()}
+                      type="submit"
+                      onClick={this.manejadorBoton}
                     >
                       Actualizar Perfil
                     </Button>
@@ -198,4 +330,5 @@ const perfilUsuario = () => {
     </>
   );
 };
+}
 export default perfilUsuario;

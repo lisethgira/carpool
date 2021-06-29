@@ -16,7 +16,9 @@ import {
 } from "reactstrap";
 
 
-const diasServicio = () => {
+class diasServicio extends React.Component {
+
+    render(){
     return (
         <>
             {/*modal días Servicio*/}
@@ -141,4 +143,6 @@ const diasServicio = () => {
 
     );
 };
+};
+
 export default diasServicio;

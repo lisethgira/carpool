@@ -19,7 +19,6 @@ import {
   Container,
   Row,
   Col,
-  bgColor
 } from "reactstrap";
 
 
@@ -56,7 +55,7 @@ const Sidebar = (props) => {
     });
   };
 
-  const { bgColor, routes, logo } = props;
+  const { routes, logo } = props;
   let navbarBrandProps;
   if (logo && logo.innerLink) {
     navbarBrandProps = {

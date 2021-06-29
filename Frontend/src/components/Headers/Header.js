@@ -1,16 +1,13 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 
 
 // reactstrap components
-import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
+import { Container } from "reactstrap";
 
-const Header = () => {
- /* logout = async e => {
-    e.preventDefault()
-    let { dispatch } = this.props
-    await dispatch(logout())
-    Notify({ value: 'Logged out!!' })
-  }*/
+class Header extends React.Component {
+
+  render() {
+ 
   return (
     <>
       <div className="header pb-8 pt-5 pt-md-8" md="6" style={{minHeight: "100px",
@@ -26,6 +23,7 @@ const Header = () => {
       </div>
     </>
   );
+};
 };
 
 export default Header;

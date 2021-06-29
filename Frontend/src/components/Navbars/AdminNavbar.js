@@ -6,12 +6,6 @@ import {
   DropdownItem,
   UncontrolledDropdown,
   DropdownToggle,
-  Form,
-  FormGroup,
-  InputGroupAddon,
-  InputGroupText,
-  Input,
-  InputGroup,
   Navbar,
   Nav,
   Container,
@@ -19,6 +13,12 @@ import {
 } from "reactstrap";
 
 const AdminNavbar = (props) => {
+  /* logout = async e => {
+    e.preventDefault()
+    let { dispatch } = this.props
+    await dispatch(logout())
+    Notify({ value: 'Logged out!!' })
+  }*/
   return (
     <>
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">

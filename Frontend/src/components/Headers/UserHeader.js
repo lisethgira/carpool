@@ -1,9 +1,15 @@
 import React from "react";
+import Cookies from 'universal-cookie';
+import axios from "axios";
 
 // reactstrap components
-import { Button, Container, Row, Col } from "reactstrap";
+import {Container, Row, Col } from "reactstrap";
 
-const UserHeader = () => {
+
+
+class UserHeader extends React.Component {
+  render(){
+    const cookies = new Cookies
   return (
     <>
       <div
@@ -35,5 +41,5 @@ const UserHeader = () => {
     </>
   );
 };
-
+};
 export default UserHeader;

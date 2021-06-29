@@ -41,45 +41,70 @@ class Login extends Component {
     e.preventDefault();
   }
 
-  manejadorChange = async e => {
-    await this.setState({
+  manejadorChange = (e) => {
+    this.setState({
       form: {
         ...this.state.form,
         [e.target.name]: e.target.value
       }
     })
-    console.log(this.state.form)
   }
 
   manejadorBoton = async () => {
+    const headers = {
+      'Content-Type': 'application/json',
+    }
+    console.log(this.state.form);
     const baseUrl = "http://localhost:5000/api/auth/login"
-    await axios.post(baseUrl, this.state.form)
+    axios.post(baseUrl, this.state.form, {
+      headers: headers
+    })
       .then(response => {
-        if (response.data.status === "ok") {
-          localStorage.setItem("token", response.data.result.token);
-          this.props.history.push("./admin/index")
+
+        if (response.status == 200) {
+          localStorage.setItem("token", response.data.token);
+          this.props.history.push("./admin/index");
+          cookies.set("token", response.data.token);
+          cookies.set("customer", response.data);
+          cookies.set('nombre', '', response.nombre );
+          cookies.set('apellido', '', response.apellido);
+          cookies.set('foto', '1', response.foto);
+          window.location.href = "/admin/index";
+        } else if (response.status == 400) {
+          this.setState({
+            error: true,
+            errorMsg: "nada" + response.data.message
+          })
         }
         else {
           this.setState({
             error: true,
-            errorMsg: response.data.result.error_smg
+            errorMsg: "Error General"
           })
         }
       }).catch(error => {
-        console.log(error);
-        this.setState({
-          error: true,
-          errorMsg: "Error al conectarse con el api"
-        })
+        if (error.response.status == 400) {
+          this.setState({
+            error: true,
+            errorMsg: error.response.data.message
+          })
+        } else {
+          this.setState({
+            error: true,
+            errorMsg: "Error al conectarse con el api"
+          })
+        }
+
       })
   }
 
-  componentDidMount() {
-    fetch('https://owcrud-api.now.sh/api/posts')
-    if (cookies.get('email')) {
-      window.location.href = "./admin/index";
+  /*componentDidMount() {
+    let token = cookies.get('token');
+    if (token != null) {
+      window.location.href = "/auth/login";
     }
-  }
+  }*/
+
 
   render() {
     return (
@@ -113,7 +138,7 @@ class Login extends Component {
                       placeholder="Email"
                       type="email"
                       autoComplete="new-email"
-                      onChange={this.manejadorOnchange}
+                      onChange={this.manejadorChange}
                     />
                   </InputGroup>
                 </FormGroup>
@@ -130,7 +155,7 @@ class Login extends Component {
                       placeholder="Password"
                       type="password"
                       autoComplete="new-password"
-                      onChange={this.manejadorOnchange}
+                      onChange={this.manejadorChange}
                     />
                   </InputGroup>
                 </FormGroup>

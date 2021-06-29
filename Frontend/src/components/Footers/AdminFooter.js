@@ -4,7 +4,9 @@ import React from "react";
 // reactstrap components
 import { Container, Row, Col, Nav, NavItem, NavLink } from "reactstrap";
 
-const Footer = () => {
+class Footer extends React.Component {
+
+  render() {
   return (
     <footer className="py-5">
         <Container>
@@ -42,6 +44,7 @@ const Footer = () => {
         </Container>
       </footer>
   );
+};
 };
 
 export default Footer;

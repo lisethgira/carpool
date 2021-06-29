@@ -11,9 +11,7 @@ import {
     Input,
     Container,
     Row,
-    Col,
-    Modal,
-    InputGroupText
+    Col
 } from "reactstrap";
 // core components
 import Header from "components/Headers/Header.js";

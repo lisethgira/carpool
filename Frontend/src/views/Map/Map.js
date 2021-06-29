@@ -7,6 +7,7 @@ import mapStyle from "./customMapStyle.json"
 import { Card, Container, Row } from "reactstrap";
 import Header from "components/Headers/Header.js";
 
+
 const geolocation = (
     canUseDOM && navigator.geolocation ?
         navigator.geolocation :

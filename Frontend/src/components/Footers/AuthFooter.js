@@ -3,7 +3,9 @@ import React from "react";
 // reactstrap components
 import { NavItem, NavLink, Nav, Container, Row, Col } from "reactstrap";
 
-const Login = () => {
+class Login extends React.Component {
+
+  render() {
   return (
     <footer className="py-5">
         <Container>
@@ -42,5 +44,5 @@ const Login = () => {
       </footer>
   );
 };
-
+};
 export default Login;
