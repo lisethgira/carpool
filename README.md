@@ -197,7 +197,7 @@ FROTNEND
 -Redux: V.4.1.0
 
 BACKEND
-
+![pruebas-Postman](https://github.com/lisethgira/ImagenesCarpool/blob/main/pruebasConPostman.png)
 -Node: 14.17.0 con la libreria de ExpressJS.
 -Mapas: se uso la libreria react-google-maps usada en Reactjs.
 
