@@ -189,7 +189,7 @@ clave: 12345
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Este repositorio cuenta con un servidor y un cliente los cuales fueron construidos con las siguientes tecnologías:
 
-[estructura](https://github.com/lisethgira/ImagenesCarpool/blob/main/WhatsApp%20Image%202021-06-30%20at%208.18.32%20AM.jpeg)
+![estructura](https://github.com/lisethgira/ImagenesCarpool/blob/main/WhatsApp%20Image%202021-06-30%20at%208.18.32%20AM.jpeg)
 
 FROTNEND
 
