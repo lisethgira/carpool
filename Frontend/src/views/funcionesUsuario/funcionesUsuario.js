@@ -26,7 +26,7 @@ const funcionesUsuario = () => {
             <Container style={{ marginBottom: "10%" }}>
 
             </Container>
-            <Container className="mt--7" fluid style={{ marginLeft: "20%" }}>
+            <Container className="mt--7" fluid style={{ marginLeft: "20%" }}>c
                 <Row>
                     <Col className="order-xl-1" xl="8">
                         <Card className="bg-info shadow">
@@ -279,6 +279,8 @@ const funcionesUsuario = () => {
                                         >
                                             Crear Servicio
                                         </Button>
+
+
                                     </div>
                                 </Form>
                             </CardBody>

@@ -50,6 +50,11 @@ const reservas = () => {
                                         <td></td>
                                         <td></td>
                                         <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        
                                     </tr>
                                 </tbody>
                             </Table>

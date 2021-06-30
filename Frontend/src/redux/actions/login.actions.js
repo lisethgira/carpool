@@ -10,6 +10,7 @@ const login = (params) => {
             dispatch({ type: ERROR, payload: null })
             const userData = await loginService.login(params)
             dispatch({ type: LOGIN, payload: userData })
+            dispatch({ type: LOADING, payload: false })
             
         } catch (error) {
             dispatch({ type: LOADING, payload: false })

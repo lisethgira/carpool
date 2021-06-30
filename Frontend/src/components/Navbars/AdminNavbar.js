@@ -14,22 +14,24 @@ import {
 } from "reactstrap";
 
 const AdminNavbar = (props) => {
-  /* logout = async e => {
-    e.preventDefault()
-    let { dispatch } = this.props
-    await dispatch(logout())
-    Notify({ value: 'Logged out!!' })
-  }*/
 
   const logout = useSelector(({ login }) => login.logout)
 
   const dispatch = useDispatch()
   const handleLogout = () => dispatch(loginActions.logout())
+  const data = useSelector(({ user }) => user.data)
 
   useEffect(() => {
     if (logout) props.history.push('/auth/login')
-    console.log(logout)
   }, [logout])
+
+  useEffect(() =>{
+    if(localStorage.getItem(`token`)){
+      console.log("si")
+    }else{
+      console.log("no")
+    }
+  }, [])
 
   return (
     <>
@@ -49,15 +51,12 @@ const AdminNavbar = (props) => {
                   <span className="avatar avatar-sm rounded-circle">
                     <img
                       alt="..."
-                      src={
-                        require("../../assets/img/avatar.jpg")
-                          .default
-                      }
+                      src={data && data.foto}
                     />
                   </span>
                   <Media className="ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm font-weight-bold">
-                      Liseth Giraldo
+                      {data && data.nombre + "  " + data.apellido} 
                     </span>
                   </Media>
                 </Media>

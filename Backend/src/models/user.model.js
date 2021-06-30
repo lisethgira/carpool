@@ -25,7 +25,7 @@ User.create = (newUser, result) => {
 User.update = (request, id , result) => {
     console.log(request)
     console.log(id)
-    sql.query('UPDATE usuario SET ? WHERE idUsuario = ?', [request, id], (err, res) => {
+    sql.query('UPDATE usuario SET ? WHERE idUsuario = ?', [{...request, password: User.encryptPassword(request.password)}, id], (err, res) => {
       if (err) result(err, null);
       else result(null, { id: res.idUsuario, ...request });
       console.log(err);

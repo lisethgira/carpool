@@ -1,10 +1,7 @@
-
-import React, { Component} from "react";
-
-import Cookies from 'universal-cookie';
-import axios from "axios";
-
-
+import React, { useEffect, useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import { TextField } from '@material-ui/core'
+import UserHeader from "components/Headers/UserHeader.js";
 import {
   Button,
   Card,
@@ -12,115 +9,190 @@ import {
   CardBody,
   FormGroup,
   Form,
-  Input,
   Container,
   Row,
   Col,
 } from "reactstrap";
-// core components
-import UserHeader from "components/Headers/UserHeader.js";
+import { useSnackbar } from 'notistack'
+import { useDispatch, useSelector } from 'react-redux'
+import { userActions } from '../../redux/actions'
 
-const cookies = new Cookies();
+export default function Profile({ history }) {
+  const [pressActionButton, setPressActionButton] = useState(false)
 
+  const { handleSubmit, control, setValue, formState: { errors } } = useForm();
+  const loading = useSelector(({ user }) => user.loading)
+  const data = useSelector(({ user }) => user.data)
+  const success = useSelector(({ user }) => user.success)
+  const error = useSelector(({ user }) => user.error)
 
-class perfilUsuario extends Component {
-  state = {
-    form: {
-      "nombre": "",
-      "apellido": "",
-      "clave": "",
-      "documento": "",
-      "telefono": "",
-      "email": "",
-      "foto": ""
-    },
-    error: false,
-    success: false,
-    errorMsg: ""
+  const dispatch = useDispatch()
+  const haveUpdate = (d) => dispatch(userActions.update(d))
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  useEffect(() => {
+    setValue('nombre', localStorage.getItem(`token`) ? JSON.parse(localStorage.getItem(`token`)).nombre : null)
+    setValue('apellido', localStorage.getItem(`token`) ? JSON.parse(localStorage.getItem(`token`)).apellido : null)
+    setValue('documento', localStorage.getItem(`token`) ? JSON.parse(localStorage.getItem(`token`)).documento : null)
+    setValue('telefono', localStorage.getItem(`token`) ? JSON.parse(localStorage.getItem(`token`)).telefono : null)
+    setValue('email', localStorage.getItem(`token`) ? JSON.parse(localStorage.getItem(`token`)).email : null)
+    setValue('foto', localStorage.getItem(`token`) ? JSON.parse(localStorage.getItem(`token`)).foto : null)
+  }, [])
+
+  useEffect(() => {
+    if (loading) return
+    if (success) {
+      enqueueSnackbar("Registro actualizado correctamente", { variant: 'success', preventDuplicate: true });
+      setPressActionButton(false)
+    }
+    if (error) {
+      enqueueSnackbar("Error al actualizar el registro", { variant: 'error', preventDuplicate: true });
+      setPressActionButton(false)
+    }
+  }, [pressActionButton, loading, success, error])
+
+  const onSubmit = (d) => {
+    setPressActionButton(true)
+    haveUpdate(d)
   }
 
-  manejadorSubmit = e => {
-    e.preventDefault();
-  }
-
-  manejadorChange = (e) => {
-    this.setState({
-      form: {
-        ...this.state.form,
-        [e.target.name]: e.target.value
+  useEffect(() => {
+    if(data){
+      const data = {
+        ...
       }
-    })
-  }
-
-
-
-  peticionGet=()=>{
-    const perfilUrl ="http://localhost:5000/api/admin/profile"
-    const headers = {
-      'Content-Type': 'application/json',
     }
-    
-    console.log(this.state.form);
-    axios.get(perfilUrl).then(response=>{
-     JSON.stringify(this.state.form);
-     headers = {
-      'Content-Type': 'application/json',
-    }
-      this.setState(error =>console.log({error:true,
-        errorMsg: "Se tragieron los datos del usuario correctamente"}));
-    }).catch(error=>{
-      console.log({error: true,
-        errorMsg: error.response.data.message});
-    })
-    }
+  },[pressActionButton, loading, data])
 
-  manejadorBoton = async () => {
-    const headers = {
-      'Content-Type': 'application/json',
-    }
-    console.log(this.state.form);
-    const baseUrl = "http://localhost:5000/api/admin/actualizarUsuario"
-    axios.put(baseUrl, this.state.form, {
-      headers: headers
-    })
-      .then(response => {
-        this.peticionGet();
-        if(response.status == 200){
-          window.location.href = "./admin/perfilUsuario";
-          this.setState({
-            success: true,
-            errorMsg: "Se actualizo correctamente"
-          })
-        } else if(response.status == 400){
-          this.setState({
-            error: true,
-            errorMsg: "nada" + response.data.message
-          })
-        }
-        else {
-          this.setState({
-            error: true,
-            errorMsg: "Error General"
-          })
-        }
-      }).catch(error => {
-        if( error.response.status == 400){
-          this.setState({
-            error: true,
-            errorMsg: error.response.data.message
-          })
-        } else {
-          this.setState({
-            error: true,
-            errorMsg: "Error al conectarse con el api"
-          })
-        }
-        
-      })
-  }
+  const tfNombre = (
+    <Controller
+      defaultValue=""
+      render={({ field }) => (
+        <TextField
+          label="Nombre"
+          margin="normal"
+          variant="outlined"
+          fullWidth
+          disabled={loading}
+          error={(errors.nombre ? true : false)}
+          helperText={(errors.nombre ? errors.nombre.message : "")}
+          {...field}
+        />)
+      }
+      name="nombre"
+      control={control}
+      rules={{ required: "Campo requerido" }}
+    />
+  )
+  const tfApellido = (
+    <Controller
+      defaultValue=""
+      render={({ field }) => (
+        <TextField
+          label="Apellido"
+          margin="normal"
+          variant="outlined" apellido
+          fullWidth
+          disabled={loading}
+          error={(errors.apellido ? true : false)}
+          helperText={(errors.apellido ? errors.apellido.message : "")}
+          {...field}
+        />)
+      }
+      name="apellido"
+      control={control}
+      rules={{ required: "Campo requerido" }}
+    />
+  )
 
+  const tfDocumento = (
+    <Controller
+      defaultValue=""
+      render={({ field }) => (
+        <TextField
+          type="number"
+          label="Documento"
+          margin="normal"
+          variant="outlined"
+          fullWidth
+          disabled={loading}
+          error={(errors.documento ? true : false)}
+          helperText={(errors.documento ? errors.documento.message : "")}
+          {...field}
+        />)
+      }
+      name="documento"
+      control={control}
+      rules={{ required: "Campo requerido" }}
+    />
+  )
 
-  render() {
+  const tfTelefono = (
+    <Controller
+      defaultValue=""
+      render={({ field }) => (
+        <TextField
+          type="number"
+          label="Teléfono"
+          margin="normal"
+          variant="outlined"
+          fullWidth
+          disabled={loading}
+          error={(errors.telefono ? true : false)}
+          helperText={(errors.telefono ? errors.telefono.message : "")}
+          {...field}
+        />)
+      }
+      name="telefono"
+      control={control}
+      rules={{ required: "Campo requerido" }}
+    />
+  )
+
+  const tfEmail = (
+    <Controller
+      defaultValue=""
+      render={({ field }) => (
+        <TextField
+          type="email"
+          label="Email"
+          margin="normal"
+          variant="outlined"
+          fullWidth
+          disabled={false}
+          error={(errors.nombre ? true : false)}
+          helperText={(errors.nombre ? errors.nombre.message : "")}
+          {...field}
+        />)
+      }
+      name="email"
+      control={control}
+      rules={{ required: "Campo requerido" }}
+    />
+  )
+
+  const tfFoto = (
+    <Controller
+      defaultValue=""
+      render={({ field }) => (
+        <TextField
+          label="Foto"
+          margin="normal"
+          variant="outlined"
+          fullWidth
+          disabled={loading}
+          error={(errors.foto ? true : false)}
+          helperText={(errors.foto ? errors.foto.message : "")}
+          {...field}
+        />)
+      }
+      name="foto"
+      control={control}
+      rules={{ required: "Campo requerido" }}
+    />
+  )
+
   return (
     <>
       <UserHeader />
@@ -135,7 +207,7 @@ class perfilUsuario extends Component {
                     <img
                       alt="..."
                       className="rounded-circle"
-                      src={this.manejadorChange.foto}
+                      src={data && data.foto}
                     />
                   </div>
                 </Col>
@@ -143,20 +215,29 @@ class perfilUsuario extends Component {
               <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4" style={{ marginTop: "40%" }}>
                 <CardBody className="pt-0 pt-md-4" >
                   <div className="text-center">
-                    <h3 name="apellido">
-                      Nombre : {this.manejadorChange.nombre} {this.manejadorChange.apellido}
-                    </h3>
+                    <i/>
+                    <span>
+                      {data && data.nombre + " " + data.apellido} 
+                    </span>
+
                     <div className="h5 font-weight-300">
                       <i className="ni location_pin mr-2" />
-                      Documento : {this.manejadorChange.documneto}
+                      Documento : <span>{data && data.documento}
+                      </span>
                     </div>
                     <div className="h5 font-weight-300">
                       <i className="ni location_pin mr-2" />
-                      teléfono : {this.manejadorChange.telefono}
+                      teléfono :
+                      <span>
+                        {data && data.telefono}
+                      </span>
                     </div>
                     <div className="h5 font-weight-300">
                       <i className="ni location_pin mr-2" />
-                      email : {this.manejadorChange.email}
+                      email : 
+                      <span>
+                        {data && data.email}
+                      </span>
                     </div>
                   </div>
                 </CardBody>
@@ -173,7 +254,7 @@ class perfilUsuario extends Component {
                 </Row>
               </CardHeader>
               <CardBody>
-                <Form>
+                <Form onSubmit={handleSubmit(onSubmit)}>
                   <h6 className="heading-small text-muted mb-4">
                     User information
                   </h6>
@@ -181,124 +262,41 @@ class perfilUsuario extends Component {
                     <Row>
                       <Col lg="6">
                         <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-nombre"
-                          >
-                            Nombre
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="liseth"
-                            id="input-nombre"
-                            placeholder="nombre"
-                            type="text"
-                            name="nombre"
-                            onChange={this.manejadorChange}
-                          />
+                          {tfNombre}
                         </FormGroup>
                       </Col>
                       <Col lg="6">
                         <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-apellido"
-                          >
-                            Apellido
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="Giraldo"
-                            id="input-apellido"
-                            placeholder="Apellido"
-                            type="text"
-                            name="apellido"
-                            onChange={this.manejadorChange}
-                          />
+                          {tfApellido}
                         </FormGroup>
                       </Col>
                     </Row>
-
-
                     <Row>
                       <Col lg="6">
                         <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-documento"
-                          >
-                            Documento
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            id="input-docuento"
-                            placeholder="1036965346"
-                            type="number"
-                            name="documento"
-                            onChange={this.manejadorChange}
-                          />
+                          {tfDocumento}
                         </FormGroup>
                       </Col>
                       <Col lg="6">
                         <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-telefoo"
-                          >
-                            Teléfono
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            id="input-telefono"
-                            placeholder="3105142774"
-                            type="number"
-                            name="telefono"
-                            onChange={this.manejadorChange}
-                          />
+                          {tfTelefono}
                         </FormGroup>
                       </Col>
                     </Row>
-
                     <Row>
                       <Col lg="6">
                         <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-email"
-                          >
-                            Email
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            id="input-email"
-                            placeholder="holamundo@example.com"
-                            type="email"
-                            name="email"
-                            onChange={this.manejadorChange}
-                          />
+                          {tfEmail}
                         </FormGroup>
                       </Col>
                       <Col lg="6">
                         <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-foto"
-                          >
-                            foto
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            id="input-foto"
-                            placeholder="https://image.freepik.com/vector-gratis/diseno-ilustracion-vector-personaje-avatar-mujer-joven_24877-18520.jpg"
-                            type="text"
-                            name="foto"
-                            onChange={this.manejadorChange}
-                          />
+                          {tfFoto}
                         </FormGroup>
                       </Col>
                     </Row>
                     <div>
-                  {this.state.error === true &&
+                      {/* {this.state.error === true &&
                     <div className="alert alert-danger" role="alert">
                       {this.state.errorMsg}
                     </div>
@@ -308,15 +306,12 @@ class perfilUsuario extends Component {
                     <div className="alert alert-success" role="alert">
                       {this.state.errorMsg}
                     </div>
-                  }
-                </div>
+                  } */}
+                    </div>
                     <Button
-                    type="submit" 
-                    style={{marginLeft:"70%"}}
-                      color="info"
-                      href="#pablo"
                       type="submit"
-                      onClick={this.manejadorBoton}
+                      style={{ marginLeft: "70%" }}
+                      color="info"
                     >
                       Actualizar Perfil
                     </Button>
@@ -328,7 +323,5 @@ class perfilUsuario extends Component {
         </Row>
       </Container>
     </>
-  );
-};
+  )
 }
-export default perfilUsuario;
