@@ -1,5 +1,7 @@
-import React from "react";
-
+import React, { useEffect, useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import { TextField } from '@material-ui/core'
+import UserHeader from "components/Headers/UserHeader.js";
 
 import {
     Button,
@@ -16,14 +18,195 @@ import {
 // core components
 import Header from "components/Headers/Header.js";
 
+import { useSnackbar } from 'notistack'
+import { useDispatch, useSelector } from 'react-redux'
+import { userActions } from '../../redux/actions'
 
-const funcionesUsuario = () => {
+export default function FuncionesUsuario({ history }) {
+    
+  const { handleSubmit, control, setValue, formState: { errors } } = useForm();
+
+  const loading = false
+    const tfHoraSalidaOrigen = (
+        <Controller
+            defaultValue=""
+            render={({ field }) => (
+                <TextField
+                    label="Hora de Salida de Origen"
+                    margin="normal"
+                    variant="outlined"
+                    className="form-check-input fadeIn third"
+                    type="time"
+                    fullWidth
+                    disabled={loading}
+                    error={(errors.nombre ? true : false)}
+                    helperText={(errors.horaSalidaOrigen ? errors.horaSalidaOrigen.message : "")}
+                    {...field}
+                />)
+            }
+            name="horaSalidaOrigen"
+            control={control}
+            rules={{ required: "Campo requerido" }}
+        />
+    )
+
+    const tfHoraLlegadaDestino = (
+        <Controller
+            defaultValue=""
+            render={({ field }) => (
+                <TextField
+                    label="Hora de Llegada a Destino"
+                    margin="normal"
+                    variant="outlined"
+                    className="form-check-input fadeIn third"
+                    type="time"
+                    fullWidth
+                    disabled={loading}
+                    error={(errors.nombre ? true : false)}
+                    helperText={(errors.horaLLegadaDestino? errors.horaLLegadaDestino.message : "")}
+                    {...field}
+                />)
+            }
+            name="horaLLgadaDestino"
+            control={control}
+            rules={{ required: "Campo requerido" }}
+        />
+    )
+    const tfPlaca = (
+        <Controller
+            defaultValue=""
+            render={({ field }) => (
+                <TextField
+                    label="Placa"
+                    margin="normal"
+                    variant="outlined" placa
+                    fullWidth
+                    disabled={loading}
+                    error={(errors.placa ? true : false)}
+                    helperText={(errors.placa ? errors.placa.message : "")}
+                    {...field}
+                />)
+            }
+            name="placa"
+            control={control}
+            rules={{ required: "Campo requerido" }}
+        />
+    )
+
+    const tfCupos= (
+        <Controller
+            defaultValue=""
+            render={({ field }) => (
+                <TextField
+                    label="Cupos"
+                    margin="normal"
+                    variant="outlined"
+                    fullWidth
+                    disabled={loading}
+                    error={(errors.documento ? true : false)}
+                    helperText={(errors.documento ? errors.documento.message : "")}
+                    {...field}
+                />)
+            }
+            name="cupos"
+            control={control}
+            rules={{ required: "Campo requerido" }}
+        />
+    )
+
+    const tfDiasServicio = (
+        <Controller
+            defaultValue=""
+            render={({ field }) => (
+                <TextField
+                    type="button"
+                    label="Días de Servicio"
+                    margin="normal"
+                    variant="outlined"
+                    fullWidth
+                    disabled={loading}
+                    error={(errors.diasServicio ? true : false)}
+                    helperText={(errors.diasServicio ? errors.diasServicio.message : "")}
+                    {...field}
+                />)
+            }
+            name="diasServicio"
+            control={control}
+            rules={{ required: "Campo requerido" }}
+        />
+    )
+
+    const tfPrecio = (
+        <Controller
+            defaultValue=""
+            render={({ field }) => (
+                <TextField
+                    type="number"
+                    label="Precio"
+                    margin="normal"
+                    variant="outlined"
+                    fullWidth
+                    disabled={false}
+                    error={(errors.precio ? true : false)}
+                    helperText={(errors.precio ? errors.precio.message : "")}
+                    {...field}
+                />)
+            }
+            name="precio"
+            control={control}
+            rules={{ required: "Campo requerido" }}
+        />
+    )
+
+    const tfDirecionOrigen = (
+        <Controller
+            defaultValue=""
+            render={({ field }) => (
+                <TextField
+                    label="Dirección de Origen"
+                    margin="normal"
+                    variant="outlined"
+                    fullWidth
+                    disabled={loading}
+                    error={(errors.direccionOrigen ? true : false)}
+                    helperText={(errors.direccionOrigen ? errors.direccionOrigen.message : "")}
+                    {...field}
+                />)
+            }
+            name="direccionOrigen"
+            control={control}
+            rules={{ required: "Campo requerido" }}
+        />
+    )
+
+    const tfDirecionDestino = (
+        <Controller
+            defaultValue=""
+            render={({ field }) => (
+                <TextField
+                    label="Dirección de Destino"
+                    margin="normal"
+                    variant="outlined"
+                    fullWidth
+                    disabled={loading}
+                    error={(errors.direccionDestino ? true : false)}
+                    helperText={(errors.direccionDestino ? errors.direccionDestino.message : "")}
+                    {...field}
+                />)
+            }
+            name="direccionDestino"
+            control={control}
+            rules={{ required: "Campo requerido" }}
+        />
+    )
 
     return (
         <>
-            <Header />
-            {/* Page content */}
-            <Container style={{ marginBottom: "10%" }}>
+        <Header />
+        {/* Page content */}
+
+
+        <Container style={{ marginBottom: "10%" }}>
 
             </Container>
             <Container className="mt--7" fluid style={{ marginLeft: "20%" }}>c
@@ -288,7 +471,11 @@ const funcionesUsuario = () => {
                     </Col>
                 </Row>
             </Container>
+
+
+
         </>
-    );
-};
-export default funcionesUsuario;
+
+
+    )
+}

@@ -40,6 +40,10 @@ Para hacer la instalación de NodeJS dirijase a la fuente oficial
 
 https://nodejs.org/es/
 
+para hacer la instalacón de expressjs dirijase a la fuente oficial
+
+https://expressjs.com/
+
 
 Para hacer la instalación de ReactJS vamos a seguir estos sencillos pasos:
 
@@ -74,7 +78,13 @@ Ahora se tiene disponible la webapp de React 16 en http://localhost:3000/ y se v
 
 Con esto ya conoces como instalar React desde cero y como generar un proyecto base.
 
+o dirijase a la fuente oficial de React js
 
+https://reactjs.org/
+
+ para hacer la instalción con redux dirijase a la fuente oficial
+
+ https://redux.js.org/introduction/getting-started
 
 ## Iniciar Aplicativo
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -93,9 +103,15 @@ para instalar librerias requeridas:
 
 npm install
 
+para que el frontend se conecte con el backend dirigete al apartado src/services/config.js y cambia la direccion ip por la de tu maquina 
+
+apiUrl = 'http://192.168.1.9:5000'
+
 ejecutar el servidor mediante:
 
 npm run start
+
+se abrira en el puerto http://localhost:3000/auth/login
 
 en la carpeta Backend abrimos una consola y pondremos los siguientes comandos.
 
@@ -109,27 +125,31 @@ npm run dev
 
 node index.js ---no esta funcional---
 
+se abrirá en el puerto 5000
+
 
 ## Funcionamiento                                                                             
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+Las funciones que esten chuliadas ya se encuentran terminadas y funcionando en el aplicativo, las demas son tareas por cumplir.
+
      hacer login : 1. al hacer el login me redirecciona  al dashboard ✓
                    2. al hacer login en el dashboard me debe mostrar los carpoolers disponibles 
-                   3. al hacer el login en el navbar me debe decir quien esta logueado con nombre apellido y foto
-	               4. al hacer el login en la vista perfil usuario me debe cargar la información del usuario   
+                   3. al hacer el login en el navbar me debe decir quien esta logueado con nombre apellido y foto✓
+	                 4. al hacer el login en la vista perfil usuario me debe cargar la información del usuario  ✓ 
 
   hacer registro : 1.al hacer el registro este me redirecciona al login  y guarda el usuario en la base de
                    datos✓  
 
 si el usuario esta logueado podrá:
 
-  editar perfil  : 1.el usuario  podra modificar sus datos de perfil y actualizarlos en el target de perfil  
+  editar perfil  : 1.el usuario  podra modificar sus datos de perfil y actualizarlos en el target de perfil  ✓
 
   publicar ruta  : 1. cambiar el rol de carpooler a usuario desactivara los inputs de la reserva y habilitara la vista 
                    de carpoolers disponibles para que pueda hacer una reserva
                    2. cambiar el rol de usuario a carpooler desactivara la vista de carpoolers disponibles y 
                    habilitara los inputs para crear un reserva
-		           3. para crear direcciones se necesita hacer uso de maps de google y abrir un modal donde busca el punto
+		               3. para crear direcciones se necesita hacer uso de maps de google y abrir un modal donde busca el punto
                    de origen y el punto de destino
                    4. al esoger los dias de servicio podra escogerlos mediante un modal que muestre los 7 dias y seleccionar en cuales hara la ruta
                    5. guardar hora de salida y hora de llegada
@@ -149,7 +169,7 @@ buscar  reserva :  1. en la pantalla de carpool verá los carpooler disponibles
                    4. podra escribir cuantos asientos ocupar
                    5. hacer reserva, este lo redireccionara al listado de reservas                                                                     
 
-   hacer logout :  1. cerrar sesión y hacer que expire el token
+   hacer logout :  1. cerrar sesión y hacer que expire el token ✓
 
 ## Usuarios registrados en la app
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -157,7 +177,7 @@ todos estos usuarios podran ser carpoolers y usuarios, dentro la app podras camb
 
 Usuario 1:
 
-email: prueba@gmail.com
+email: hola2@gmail.com
 clave: 12345
 
 Usuario 2:
@@ -206,6 +226,6 @@ chromium.
 
 ## Agradecimientos
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Agradecemientos a Cesde, tambien a Digital School por la oportunidad que brindaron a este grupo selecto de 13 estudiantes permitiendonos cambiar y expandirnos a nuevos conocimientos, a  la empresa Chouqueir Testing S.A por el apoyo economico en todo este tiempo de estudio y la confiaza que han depositado para que pudiese llevar este proceso, a Jose Rafael Arrieta Dominguez quien fue el tutor asignado durante esta ruta de aprendizaje y gran ayuda en la construcción de este proyecto y del cual me llevo  grandes aprendizajes; a el equipo de apoyo que conforme durante este largo año y que sin importar la distancia siempre estuvo cuando lo necesite Tatiana Zapata, Sebastian Llano, Alejandro Montoya dentro del ambito academico y fuera de él a Peter Herrera,Moises Guerra,Jasan Hernandez.
+Agradecemientos a Cesde, tambien a Digital School por la oportunidad que brindaron a este grupo selecto de 13 estudiantes permitiendonos cambiar y expandirnos a nuevos conocimientos, a  la empresa Chouqueir Testing S.A por el apoyo economico en todo este tiempo de estudio y la confiaza que han depositado para que pudiese llevar este proceso, a Jose Rafael Arrieta Dominguez quien fue el tutor asignado durante esta ruta de aprendizaje y gran ayuda en la construcción de este proyecto y del cual me llevo  grandes aprendizajes; a el equipo de apoyo que conforme durante este largo año y que sin importar la distancia siempre estuvo cuando lo necesite Tatiana Zapata, Sebastian Llano, Alejandro Montoya dentro del ambito academico y fuera de él a Peter Herrera,Moises Guerra.
 
 A todos ellos Muchas Gracias.
