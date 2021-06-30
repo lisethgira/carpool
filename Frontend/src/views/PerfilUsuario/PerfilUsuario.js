@@ -59,9 +59,12 @@ export default function Profile({ history }) {
 
   useEffect(() => {
     if(data){
-      const data = {
-        ...
+      const data2 = {
+        ...JSON.parse(localStorage.getItem(`token`)),
+        ...data
       }
+
+      localStorage.setItem('token', JSON.stringify(data2))
     }
   },[pressActionButton, loading, data])
 
