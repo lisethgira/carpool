@@ -9,7 +9,7 @@ APLICACION WEB CARPOOL
 El trasnporte de vehículo compartido también conocido por los términos en inglés carpool o carpooling​ es la práctica que consiste en compartir un automóvil con otras personas para viajes periódicos. Con esta práctica se pretende reducir la congestión de tránsito en las grandes ciudades así como facilitar los desplazamientos a personas que no dispongan de coche propio. Además, supone una notable disminución de emisiones de CO2, al reducir el número de coches en las carreteras. A su vez, favorece las relaciones sociales entre personas que realizan los mismos recorridos.
 
 en el carpooling un usuario puede ser carpooler y usuario al mismo tiempo,pagar en efectivo al conductor o tener contacto directo entre carpooler y cliente
-
+![imagen1](https://github.com/lisethgira/ImagenesCarpool/blob/main/vistaAplicativo.png)
 
 ## Table of Contents
 
